@@ -1,0 +1,110 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Manage Payment Types</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a routerLink="/main/dashboard" href="#">Home</a></li>
+          <li class="breadcrumb-item active">Manage Payment Types</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-6 col-12">
+
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">Payment Type Information</h3>
+
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col col-12">
+                <form #frmPaymentTypes="ngForm" (ngSubmit)="frmPaymentTypes.form.valid &&savePaymentType()">
+
+                  <div class="row">
+                    <div class="col-md-6"><p class="form-group">
+                      <label for="typeName">Type Name</label>
+                      <input [disabled]="manuallySelected" name="typeName" #typeName [(ngModel)]="selectedPaymentType.typeName" id="typeName"
+                            [ngClass]="{ 'is-invalid': frmPaymentTypes.submitted && typeName.invalid }" required class="form-control" required>
+                    </p>
+                    <div *ngIf="frmPaymentTypes.submitted && typeName.invalid" class="invalid-feedback">
+                      <div *ngIf="typeName.errors.required">Payment type is required!</div>
+                    </div>
+                  </div>
+                    <div class="col-md-6"><p class="form-group">
+                      <label for="txtRate">Rate</label>
+                      <input type="number" name="txtRate" [(ngModel)]="selectedPaymentType.rate" id="txtRate"
+                             class="form-control" required>
+                    </p></div>
+                  </div>
+
+                  <p class="form-group">
+                    <label for="txtNotes">Comments</label>
+                    <input name="txtNotes" [(ngModel)]="selectedPaymentType.notes" id="txtNotes"
+                           class="form-control">
+                  </p>
+
+                  <div>
+                    <button [disabled]="!frmPaymentTypes.form.valid" type="submit" class="btn btn-primary">Save</button>
+                    &nbsp;
+                    <button (click)="clear()" type="button" class="btn btn-warning">Clear</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+        </div>
+        <!-- /.card -->
+
+      </div>
+      <div class="col-md-6 col-12">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span><input class="form-control" type="text"
+                 name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="  Search here...">
+        </div>
+        <table id="tblPaymentTypes" class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Type Name</th>
+            <th>Rate</th>
+            <th>Notes</th>
+
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let paymentType of paymentTypes | filter:searchText | paginate: { itemsPerPage: 7, currentPage: p }"
+              (click)="selectPaymentType(paymentType)" [class.selected]="paymentType==selectedPaymentType">
+            <td>{{paymentType.typeName}}</td>
+            <td>{{paymentType.rate}}</td>
+            <td>{{paymentType.notes}}</td>
+            <!-- <td>
+              <i (click)="deletePaymentType(paymentType)" class="fa fa-trash fa-2x"></i>
+            </td> -->
+          </tr>
+          </tbody>
+          <tfoot>
+          <tr>
+            <td colspan="3">
+              <pagination-controls (pageChange)="p = $event"></pagination-controls>
+            </td>
+          </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+

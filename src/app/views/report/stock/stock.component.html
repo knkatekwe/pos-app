@@ -1,0 +1,105 @@
+
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Stock History</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Stock History</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+      <div class="col-md-12 col-12">
+        <table datatable #tblStock [dtOptions]="dtOptions" id="tblStock" class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Date</th>
+            <!-- <th>Stock Number</th> -->
+            <th>T/Price</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let stock of stock">
+            <td>{{stock.date}}</td>
+            <!-- <td>{{stock.sId}}</td> -->
+            <td>$ZWL {{stock.totalPrice}}</td>
+            <td>
+              <a (click)="loadStockDetails(stock.sId)" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#stockModal">View Details</a>
+            </td>
+          </tr>
+          </tbody>
+          <!-- <tfoot>
+            <tr>
+              <td colspan="5">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+              </td>
+            </tr>
+            </tfoot> -->
+          <!-- <tfoot>
+          <tr>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Unit Price</th>
+            <th>Qty</th>
+            <th></th>
+          </tr>
+          </tfoot> -->
+        </table>
+      </div>
+
+<!--modal for stock details-->
+
+<!-- Modal -->
+<div id="stockModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title">Stock Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-12">
+          <table id="tblStockDetails" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>P/Price</th>
+              <th>U/Price</th>
+              <th>T/Cost</th>
+              <th>P/Margin</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let stock of stockDetails">
+              <td>{{stock.item.code}}</td>
+              <td>{{stock.item.discription}}</td>
+              <td>{{stock.quantity}}</td>
+              <td>$ZWL {{stock.purchasePrice.toFixed(2)}}</td>
+              <td>$ZWL {{stock.unitprice.toFixed(2)}}</td>
+              <td>$ZWL {{stock.purchasePrice * stock.quantity}}</td>
+              <td>$ZWL {{(stock.unitprice * stock.quantity) - (stock.purchasePrice * stock.quantity)}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+  <!--/modal for stock details-->

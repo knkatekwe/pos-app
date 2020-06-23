@@ -1,0 +1,100 @@
+ <!-- Content Header (Page header) -->
+ <div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Sales History</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a href="#">Home</a></li>
+          <li class="breadcrumb-item active">Sales History</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+      <div class="col-md-12 col-12">
+        <table datatable #tblSales [dtOptions]="dtOptions" id="tblSales" class="table table-bordered table-hover">
+          <thead>
+          <tr>
+            <th>Date</th>
+            <th>Payment</th>
+            <th>T/Price</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let order of orders">
+            <td>{{order.date}}</td>
+            <td>{{order.paymentType.typeName}}</td>
+            <td>$ZWL {{order.totalPrice}}</td>
+            <td>
+              <a (click)="loadOrderDetails(order.oId)" class="btn btn-sm btn-outline-warning" data-toggle="modal" data-target="#saleDetailModal">View Details</a>
+            </td>
+          </tr>
+          </tbody>
+          <!-- <tfoot>
+            <tr>
+              <td colspan="5">
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+              </td>
+            </tr>
+            </tfoot> -->
+          <!-- <tfoot>
+          <tr>
+            <th>Item Name</th>
+            <th>Description</th>
+            <th>Unit Price</th>
+            <th>Qty</th>
+            <th></th>
+          </tr>
+          </tfoot> -->
+        </table>
+      </div>
+
+      <!--modal for sales details-->
+
+<!-- Modal -->
+<div id="saleDetailModal" class="modal fade" role="dialog">
+  <div class="modal-dialog modal-lg">
+
+    <!-- Modal content-->
+    <div class="modal-content">
+      <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal">&times;</button> -->
+        <h4 class="modal-title">Sale Details</h4>
+      </div>
+      <div class="modal-body">
+        <div class="col-md-12 col-12">
+          <table id="tblSaleDetails" class="table table-bordered table-hover">
+            <thead>
+            <tr>
+              <th>Code</th>
+              <th>Description</th>
+              <th>Qty</th>
+              <th>U/Price</th>
+              <th>T/Price</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let order of orderDetails">
+              <td>{{order.item.code}}</td>
+              <td>{{order.item.discription}}</td>
+              <td>{{order.quantity}}</td>
+              <td>$ZWL {{order.unitprice.toFixed(2)}}</td>
+              <td>$ZWL {{order.unitprice * order.quantity}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+  <!--/modal for sales details-->

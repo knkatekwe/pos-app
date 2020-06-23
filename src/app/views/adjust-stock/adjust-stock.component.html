@@ -1,0 +1,163 @@
+<!-- Main content -->
+<div class="col-md-12 order-md-1">
+  <!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Remove From Stock</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a routerLink="/main/dashboard" href="#">Home</a></li>
+          <li class="breadcrumb-item active">Remove From Stock</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+  <form #frmItems="ngForm" (ngSubmit)="addAdjustment()" class="needs-validation" novalidate>
+
+    <!-- <div class="row">
+
+      <div class="col-md-2">
+        <label for="countrys">PaymentType Name</label>
+        <select (change)="searchPaymentType($event)" class="custom-select d-block w-100" id="countrys" required>
+          <option value="">Choose...</option>
+          <option *ngFor="let paymentType of paymentTypes">{{paymentType.typeName}}</option>
+        </select>
+      </div>
+
+
+      <div class="col-md-3 mb-3">
+        <label for="paymentTypeName">Rate</label>
+        <input type="text" class="form-control" id="paymentTypeName" placeholder="" name="rate"
+               [(ngModel)]="searchedPaymentTypes.rate" disabled required>
+
+      </div>
+
+    </div> -->
+
+    <div class="row">
+
+    </div>
+
+    <form #frmItem="ngForm">
+
+      <div class="row">
+
+        <div class="col-md-2 mb-3">
+          <label for="code">Product Code:</label>
+            <input id="code" type="text"
+                   name="code"
+                   #code
+                   class="form-control"
+                   [formControl]="codeF"
+                   (change)="searchItems($event)"
+                   [(ngModel)]="model.code"
+                   [ngbTypeahead]="search"
+                   [resultFormatter]="resultFormatBandListValue"
+                   [inputFormatter]="inputFormatBandListValue"
+                   #instance="ngbTypeahead"
+                   [inputFormatter]="formatter"
+                   autofocus
+              />
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label for="Discription">Description</label>
+          <input type="text" class="form-control" id="Discription" placeholder="" name="discription"
+                  [formControl]="description" [(ngModel)]="searchedItems.discription" disabled required>
+        </div>
+
+        <div class="col-md-1 mb-3">
+          <label for="unicprice">U/Price</label>
+          <input type="number" class="form-control" id="unicprice" placeholder="" name="unicPrice"
+                 [(ngModel)]="searchedItems.unicPrice" min="1" max="1000" step="0.01" value="0.00"
+                 [formControl]="unitPrice" disabled required>
+        </div>
+
+        <div class="col-md-1 mb-3">
+
+            <label for="purchasePrice">P/Price</label>
+            <input type="number" class="form-control" id="purchasePrice" placeholder=""
+                  [(ngModel)]="searchedItems.purchasePrice" min="1" max="1000" step="0.01" value="0.00"
+                  [formControl]="purchasePrice" disabled name="purchasePrice" required>
+
+        </div>
+
+        <div class="col-md-2 mb-3">
+          <label for="Qty On Hand">Qty In Stock</label>
+          <input type="number" class="form-control" id="Qty On Hand" placeholder="0"  name="qtyonhand"
+                [formControl]="qtyOHF" [(ngModel)]="searchedItems.qtyOnHand" disabled required>
+        </div>
+
+        <div class="col-md-1 mb-3">
+          <div class="row">
+            <label for="qty">Deduction</label>
+            <input #qty type="number" class="form-control" id="qty" placeholder="" min="1" name="qty"
+                  [formControl]="qtyF" required>
+          </div>
+        </div>
+
+        <div class="card-body button">
+          <button class="btn btn-primary" (click)="SelectAdjustmentDetails()">Add To Cart</button>
+        </div>
+     </div>
+
+    </form>
+
+    <div class="col-md-12 col-12">
+      <table id="tblPaymentTypes" class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <th>Product Code</th>
+          <th>Description</th>
+          <th>U/Price</th>
+          <th>P/Price</th>
+          <th>Qty</th>
+          <th>T/Price</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let SelectItem of selectedItems; let i = index">
+          <td>{{SelectItem.item.code}}</td>
+          <td>{{SelectItem.item.discription}}</td>
+          <td>$ZWL {{SelectItem.item.unicPrice}}</td>
+          <td>$ZWL {{SelectItem.purchasePrice}}</td>
+          <td>{{SelectItem.quantity}}</td>
+          <td>$ZWL {{SelectItem.quantity * SelectItem.unitprice}}</td>
+          <td>
+            <button (click)="removeItem(i, SelectItem.quantity * SelectItem.unitprice)" class="btn btn-sm btn-outline-danger">Remove</button>
+          </td>
+        </tr>
+        </tbody>
+        <!-- <tfoot>
+        <tr>
+          <th>Item Name</th>
+          <th>Description</th>
+          <th>Unit Price</th>
+          <th>Qty</th>
+          <th></th>
+        </tr>
+        </tfoot> -->
+      </table>
+    </div>
+
+    <div class="row">
+      <div class="col-md-3 offset-md-3"></div>
+      <div class="col-md-3 offset-md-3">
+        <label for="total"><h3>Total</h3></label>
+        <input type="text" class="form-control" id="total" placeholder="" name="total"
+               value="$ZWL {{FullTotal}}" disabled required>
+      </div>
+    </div>
+
+    <div class="card-footer text-muted">
+      <hr class="mb-4">
+      <button [disabled]="!selectedItems || selectedItems.length === 0" class="btn btn-success btn-lg btn-block" type="submit">Complete Adjustment Intake</button>
+    </div>
+  </form>
+</div>
