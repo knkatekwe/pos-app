@@ -2,40 +2,42 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, Directive, Component } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { DashboardComponent } from './views/dashboard/dashboard.component';
-import { ManagePaymentTypesComponent } from './views/manage-customers/manage-customers.component';
-import {RouterModule, Routes} from '@angular/router';
-import {PaymentTypeService} from './services/payment-type.service';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HTTP_INTERCEPTORS} from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {ManagePaymentTypeComponentCandeactivateGuard} from './guards/manage-customer-component-candeactivate.guard';
-import {LoginComponent } from './views/login/login.component';
-import {MainComponent } from './views/main/main.component';
-import {AppRoutingModule} from './app-routing.module';
-import {AuthGuard} from './guards/auth.guard';
-import {AuthService} from './services/auth.service';
-import {ItemsComponent} from './views/items/items.component';
-import {ItemService} from './services/item.service';
-import {OrderService} from './services/orders.service';
-import {StockService} from './services/stock.service';
-import { PlaceOrderComponent } from './views/place-order/place-order.component';
-import { PlaceStockComponent } from './views/place-stock/place-stock.component';
-import {ManageItemComponentCandeactivateGuardGuard} from './guards/manage-item-component-candeactivate-guard.guard';
-import {PlaceOrder} from './dtos/place-order';
-import {PlaceOrderServiceService} from './services/place-order-service.service';
-import {PlaceStockServiceService} from './services/place-stock-service.service';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {DataTablesModule} from 'angular-datatables';
-import { SalesComponent } from './views/report/sales/sales.component';
-import { ProductsComponent } from './views/report/products/products.component';
-import { OrdersComponent } from './views/report/orders/orders.component';
-import { StockComponent } from './views/report/stock/stock.component';
-import { ReportComponent } from './views/report/report.component';
-import { AdjustStockComponent } from './views/adjust-stock/adjust-stock.component';
-import { PlaceAdjustmentServiceService } from './services/place-adjustment.service';
-import { AdjustmentService } from './services/adjustment.service';
+import { HttpTokenInterceptor } from './core/interceptors';
+import { ApiService } from './core/services/api.service';
+import { JwtService } from './core/services/jwt.service';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ManagePaymentTypesComponent } from './manage-customers/manage-customers.component';
+import { MainComponent } from './main/main.component';
+import { ItemsComponent } from './items/items.component';
+import { PlaceOrderComponent } from './place-order/place-order.component';
+import { PlaceStockComponent } from './place-stock/place-stock.component';
+import { SalesComponent } from './reports/sales/sales.component';
+import { ProductsComponent } from './reports/products/products.component';
+import { OrdersComponent } from './reports/orders/orders.component';
+import { StockComponent } from './reports/stock/stock.component';
+import { ReportComponent } from './report/report.component';
+import { AdjustStockComponent } from './adjust-stock/adjust-stock.component';
+import { AppRoutingModule } from './app-routing.module';
+import { PaymentTypeService } from './core/services/payment-type.service';
+import { ItemService } from './core/services/item.service';
+import { OrderService } from './core/services/orders.service';
+import { StockService } from './core/services/stock.service';
+import { AdjustmentService } from './core/services/adjustment.service';
+import { PlaceOrderServiceService } from './core/services/place-order-service.service';
+import { PlaceStockServiceService } from './core/services/place-stock-service.service';
+import { PlaceAdjustmentServiceService } from './core/services/place-adjustment.service';
+import { ManagePaymentTypeComponentCandeactivateGuard } from './core/guards/manage-customer-component-candeactivate.guard';
+import { ManageItemComponentCandeactivateGuardGuard } from './core/guards/manage-item-component-candeactivate-guard.guard';
+import { AuthGuard } from './core/guards/auth.guard';
+import { AuthService } from './core/services/auth.service';
+import { UserService } from './core/services/user.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -66,6 +68,7 @@ import { AdjustmentService } from './services/adjustment.service';
     DataTablesModule
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: HttpTokenInterceptor, multi: true },
     PaymentTypeService,
     ItemService,
     OrderService,
@@ -77,7 +80,12 @@ import { AdjustmentService } from './services/adjustment.service';
     ManagePaymentTypeComponentCandeactivateGuard,
     ManageItemComponentCandeactivateGuardGuard,
     AuthGuard,
-    AuthService
+    AuthService,
+    ApiService,
+    UserService,
+    AuthGuard,
+    JwtService,
+
   ],
   bootstrap: [AppComponent]
 })
