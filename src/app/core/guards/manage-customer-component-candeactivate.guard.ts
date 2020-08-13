@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
-import { ManagePaymentTypesComponent } from 'src/app/manage-customers/manage-customers.component';
+import { ManagePaymentTypesComponent } from 'src/app/management/manage-customers/manage-customers.component';
 
 @Injectable()
 export class ManagePaymentTypeComponentCandeactivateGuard implements CanDeactivate<ManagePaymentTypesComponent> {

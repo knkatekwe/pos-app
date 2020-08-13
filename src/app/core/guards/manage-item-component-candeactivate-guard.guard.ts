@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate } from '@angular/router';
-import { ItemsComponent } from 'src/app/items/items.component';
+import { ActivatedRouteSnapshot, RouterStateSnapshot, CanDeactivate } from '@angular/router';
 import { Observable } from 'rxjs';
+import { ItemsComponent } from 'src/app/inventory/items/items.component';
 
 @Injectable()
 export class ManageItemComponentCandeactivateGuardGuard implements CanDeactivate<ItemsComponent> {

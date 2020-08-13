@@ -53,7 +53,7 @@ export class UserService {
 
   setAuth(user) {
     // Save JWT sent from server in localstorage
-    this.jwtService.saveToken(user.jwt);
+    this.jwtService.saveToken(user.token);
     //console.log('token has been set!')
     // Set current user data into observable
     this.currentUserSubject.next(user.user);
@@ -74,11 +74,13 @@ export class UserService {
   //    return this.http.get('http://localhost:1337/auth/local', data);
   // }
 
-  login(credentials: any): Observable<any> {
+  login(credentials): Observable<any> {
     return this.apiService.post('/auth/signin' , credentials)
       .pipe(map(
-        data => {this.setAuth(data);
-        return data;
+        data => {
+          this.setAuth(data);
+          console.log(data)
+          return data;
       },
         error => {return error}
     ));
