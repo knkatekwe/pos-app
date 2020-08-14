@@ -1,122 +1,140 @@
-  <!-- Content Header (Page header) -->
-  <div class="content-header">
-    <div class="container-fluid">
-      <div class="row mb-2">
-        <div class="col-sm-6">
-          <h1 class="m-0 text-dark">Manage User(s)</h1>
-        </div><!-- /.col -->
-        <div class="col-sm-6">
-          <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a routerLink="/dashboard">Home</a></li>
-            <li class="breadcrumb-item active">Manage User(s)</li>
-          </ol>
-        </div><!-- /.col -->
-      </div><!-- /.row -->
-    </div><!-- /.container-fluid -->
-  </div>
-  <!-- /.content-header -->
+<!-- Content Header (Page header) -->
+<div class="content-header">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1 class="m-0 text-dark">Manage User(s)</h1>
+      </div><!-- /.col -->
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+          <li class="breadcrumb-item active">Manage User(s)</li>
+        </ol>
+      </div><!-- /.col -->
+    </div><!-- /.row -->
+  </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
 
-  <!-- Main content -->
-  <section class="content">
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-md-4 col-12">
+<!-- Main content -->
+<section class="content">
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-md-4 col-12">
 
-          <div class="card card-primary">
-            <div class="card-header">
-              <h3 class="card-title">User(s) Information</h3>
+        <div class="card card-primary">
+          <div class="card-header">
+            <h3 class="card-title">User(s) Information</h3>
 
-            </div>
-            <!-- /.card-header -->
-            <div class="card-body">
-              <div class="row">
-                <div class="col col-12">
-                  <form #frmUser="ngForm" (ngSubmit)="frmUser.form.valid && saveUser()">
+          </div>
+          <!-- /.card-header -->
+          <div class="card-body">
+            <div class="row">
+              <div class="col col-12">
+                <form [formGroup]="form" (ngSubmit)="saveUser(form.value)">
 
+                  <input type="hidden" [(ngModel)]="selectedUser.id" formControlName="id"/>
+
+                  <p class="form-group">
+                    <label for="code">Username</label>
+                    <input [disabled]="manuallySelected" [(ngModel)]="selectedUser.username"
+                           class="form-control"
+                           id="code" [ngClass]="{ 'is-invalid': f.username.invalid }"
+                           formControlName="username"/>
+
+                  </p>
+                  <div *ngIf="f.username.dirty && f.username.invalid" class="invalid-feedback">
+                    <div *ngIf="f.username.invalid">Username is required!</div>
+                  </div>
+
+                    <!-- <div class="form-group">
+                      <label for="role">Select Role</label>
+                      <select class="form-control" id="role"
+                              formControlName="roles" (change)="addRoles(f.roles.value)">
+                        <option selected>Select Role...</option>
+                        <option [value]="role.name" *ngFor="let role of rights">{{role.name}}</option>
+                      </select>
+                    </div> -->
+
+                  <div>
                     <p class="form-group">
-                      <label for="code">Username</label>
-                      <input [disabled]="manuallySelected" name="code" #code="ngModel" [(ngModel)]="selectedUser.username" id="code"
-                      [ngClass]="{ 'is-invalid': frmUser.submitted && code.invalid }" required class="form-control">
+                      <label for="pass">Password</label>
+                      <input [disabled]="manuallySelected" type="password"
+                             [ngClass]="{ 'is-invalid': f.password.invalid }"
+                             id="pass" class="form-control"
+                             formControlName="password">
                     </p>
-                    <div *ngIf="frmUser.submitted && code.invalid" class="invalid-feedback">
-                      <div *ngIf="code.errors.required">Code is required!</div>
+                    <div *ngIf="f.password.invalid" class="invalid-feedback">
+                      <div *ngIf="f.password.invalid">Password is required!</div>
                     </div>
+                  </div>
 
-                      <div><p class="form-group">
-                        <label for="qtyOnHand">Phone number</label>
-                        <input [disabled]="manuallySelected" type="text" name="qtyOnHand" [(ngModel)]="selectedUser.phoneNumber" id="qtyOnHand"
-                               class="form-control">
-                      </p></div>
-
-                      <div><p class="form-group">
-                        <label for="txtpurchasePrice">Email</label>
-                        <input [disabled]="manuallySelected" type="text" name="txtpurchasePrice" [(ngModel)]="selectedUser.email" id="txtpurchasePrice"
-                               class="form-control" min="0" max="1000" step="0.01" value="0.00">
-                      </p></div>
-
-
-                    <!-- <p class="form-group">
-                      <label for="txtDiscription">Description</label>
-                      <input name="txtDiscription" [(ngModel)]="selectedUser.address" id="txtDiscription" class="form-control">
-                    </p> -->
-
-                    <!-- <p class="form-group">
-                      <label for="txtComments">Comments</label>
-                      <input type="text" name="txtComments" [(ngModel)]="selectedUser.comments" id="txtComments" class="form-control">
-                    </p> -->
-
-
-
-                    <div>
-                      <button type="submit" class="btn btn-primary">Save</button>
-                      &nbsp;
-                      <button (click)="clear()" type="button" class="btn btn-warning">Clear</button>
+                  <div>
+                    <p class="form-group">
+                      <label for="conpass">Confirm Password</label>
+                      <input [disabled]="manuallySelected" type="password"
+                             [ngClass]="{ 'is-invalid': f.password_confirmation.invalid }"
+                             id="conpass" class="form-control"
+                             formControlName="password_confirmation">
+                    </p>
+                    <div *ngIf="f.password_confirmation.invalid" class="invalid-feedback">
+                      <div *ngIf="f.password_confirmation.invalid">Password confirmation is required!</div>
                     </div>
-                  </form>
-                </div>
+                    <div *ngIf="passwordSimilar">
+                      <div>Passwords should match!</div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Save</button>
+                    &nbsp;
+                    <button (click)="clear()" type="button" class="btn btn-warning">Clear</button>
+                    <!-- <pre>{{form.value | json}}</pre> -->
+                  </div>
+                </form>
               </div>
             </div>
-            <!-- /.card-body -->
           </div>
-          <!-- /.card -->
-
+          <!-- /.card-body -->
         </div>
-        <div class="col-md-8 col-12">
-          <div class="form-group has-search">
-            <span class="fa fa-search form-control-feedback"></span><input class="form-control" type="text"
-                   name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="  Search here...">
-          </div>
-          <table id="tblUser" class="table table-bordered table-hover">
-            <thead>
+        <!-- /.card -->
+
+      </div>
+      <div class="col-md-8 col-12">
+        <div class="form-group has-search">
+          <span class="fa fa-search form-control-feedback"></span><input class="form-control" type="text" name="search"
+            [(ngModel)]="searchText" autocomplete="off" placeholder="  Search here...">
+        </div>
+        <table id="tblUser" class="table table-bordered table-hover">
+          <thead>
             <tr>
-              <th>Username</th>
-              <th>Phone number</th>
-              <th>Email</th>
+              <th>Username(s)</th>
+              <th>Role</th>
+              <!-- <th>Email</th> -->
               <!-- <th></th> -->
             </tr>
-            </thead>
-            <tbody>
-            <tr *ngFor="let user of user | filter:searchText | paginate: { itemsPerPage: 6, currentPage: p }" (click)="selectUser(user)"
-                [class.selected]="user==selectedUser">
+          </thead>
+          <tbody>
+            <tr *ngFor="let user of user | filter:searchText | paginate: { itemsPerPage: 6, currentPage: p }"
+              (click)="selectUser(user)" [class.selected]="user==selectedUser">
               <td>{{user.username}}</td>
-              <td>{{user.phoneNumber}}</td>
-              <td>{{user.email}}</td>
+              <td>{{user.roles[0].name}}</td>
+              <!-- <td>{{user.email}}</td> -->
 
               <!-- <td>
                 <i (click)="deletUser(item)" class="fa fa-trash fa-2x"></i>
               </td> -->
             </tr>
-            </tbody>
-            <tfoot>
+          </tbody>
+          <tfoot>
             <tr>
               <td colspan="5">
                 <pagination-controls (pageChange)="p = $event"></pagination-controls>
               </td>
             </tr>
-            </tfoot>
-          </table>
-        </div>
+          </tfoot>
+        </table>
       </div>
-    </div><!-- /.container-fluid -->
-  </section>
-
+    </div>
+  </div><!-- /.container-fluid -->
+</section>

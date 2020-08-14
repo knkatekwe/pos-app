@@ -7,7 +7,7 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a routerLink="/main/dashboard">Home</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </div>
@@ -72,21 +72,30 @@
 
     <ul class="list-group">
       <li class="list-group-item active">Today's Sales Summary</li>
+
       <li class="list-group-item d-flex justify-content-between align-items-center">
-        Cash
-        <span class="badge badge-info badge-pill">$ZWL {{totalForCash}}</span>
+        USD
+        <span class="badge badge-info badge-pill">{{totalForUsd | currency: 'USD'}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Bond
+        <span class="badge badge-info badge-pill">{{totalForBond  | currency: 'USD'}}</span>
       </li>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         EcoCash
-        <span class="badge badge-info badge-pill">$ZWL {{totalForEcoCash}}</span>
+        <span class="badge badge-info badge-pill">{{totalForEcoCash  | currency: 'USD'}}</span>
       </li>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         Swipe
-        <span class="badge badge-info badge-pill">$ZWL {{totalForSwipe}}</span>
+        <span class="badge badge-info badge-pill">{{totalForSwipe  | currency: 'USD'}}</span>
+      </li>
+      <li class="list-group-item d-flex justify-content-between align-items-center">
+        Rands
+        <span class="badge badge-info badge-pill">{{totalForRands | currency:'ZAR'}}</span>
       </li>
       <li class="list-group-item d-flex justify-content-between align-items-center">
         <strong>Total</strong>
-        <span class="badge badge-info badge-pill">$ZWL {{totalAllRoundAmount}}</span>
+        <span class="badge badge-info badge-pill">{{totalAllRoundAmount  | currency: 'USD'}}</span>
       </li>
     </ul>
 

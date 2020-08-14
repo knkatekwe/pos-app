@@ -16,7 +16,6 @@ import { ItemService } from 'src/app/core/services/item.service';
 @Component({
   selector: 'app-adjust-adjustment',
   templateUrl: './adjust-stock.component.html',
-  styleUrls: ['./adjust-stock.component.css']
 })
 export class AdjustStockComponent implements OnInit {
 
@@ -191,9 +190,9 @@ inputFormatBandListValue(value: any)   {
       (result) => {
         if (result) {
           alert('Adjustment has been saved successfully');
-          // this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
-          this.route.navigate(['/main/place-adjustment']);
+          this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          //this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
+          this.route.navigate(['/main/inventory/place-adjustment']);
         });
         } else {
           alert('Failed to save the Adjustment');

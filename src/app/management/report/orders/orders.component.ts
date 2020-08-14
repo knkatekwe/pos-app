@@ -13,7 +13,7 @@ declare var $: any;
 export class OrdersComponent implements OnInit {
 
   orders: Array<Orders> = [];
-  orderDetails: Array<OrdersDetail> = [];
+  orderz: Orders;
    // Must be declared as "any", not as "DataTables.Settings"
    dtOptions: any = {};
 
@@ -40,22 +40,21 @@ export class OrdersComponent implements OnInit {
     this.dataTable.DataTable();
   }
 
-  loadAllOrders(): void {
+  loadAllOrders(){
     this.orderService.getAllOrders().subscribe(
       (result) => {
         this.orders = result;
         console.log(this.orders);
-
       }
     );
   }
 
   // retrieve order details from api
-  loadOrderDetails(oId: number): void {
+  loadOrderDetails(oId: number){
     this.orderService.getAllOrderDetails(oId).subscribe(
       (result) => {
-        this.orderDetails = result;
-        console.log(this.orderDetails);
+        this.orderz = result;
+        console.log(this.orderz);
       }
     );
 

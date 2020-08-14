@@ -7,7 +7,7 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a routerLink="/main/dashboard" href="#">Home</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
           <li class="breadcrumb-item active">Manage Product(s)</li>
         </ol>
       </div><!-- /.col -->
@@ -111,8 +111,8 @@
               [class.selected]="item==selectedItems">
             <td>{{item.code}}</td>
             <td>{{item.discription}}</td>
-            <td>$ZWL {{item.unicPrice.toFixed(2)}}</td>
-            <td>$ZWL {{item.purchasePrice.toFixed(2)}}</td>
+            <td>{{item.unicPrice | currency: 'USD'}}</td>
+            <td>{{item.purchasePrice | currency: 'USD'}}</td>
             <td>{{item.qtyOnHand}}</td>
 
             <!-- <td>

@@ -50,14 +50,14 @@ export class ManagePaymentTypesComponent implements OnInit {
     }
   }
 
-  selectPaymentType(paymentType: PaymentType): void {
+  selectPaymentType(paymentType: PaymentType){
     this.clear();
     this.selectedPaymentType = paymentType;
     this.tempPaymentType = Object.assign({}, paymentType);
     this.manuallySelected = true;
   }
 
-  clear(): void {
+  clear(){
     const index = this.paymentTypes.indexOf(this.selectedPaymentType);
     if (index !== -1) {
       this.paymentTypes[index] = this.tempPaymentType;
@@ -67,7 +67,7 @@ export class ManagePaymentTypesComponent implements OnInit {
     this.manuallySelected = false;
   }
 
-  savePaymentType(): void {
+  savePaymentType(){
     this.paymentTypeService.savePaymentType(this.selectedPaymentType).subscribe(
       (result) => {
         if (result) {

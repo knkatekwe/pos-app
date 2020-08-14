@@ -10,12 +10,20 @@ import { DataTablesModule } from 'angular-datatables';
 import { SideBarComponent } from './layout/side-bar/side-bar.component';
 import { NavBarComponent } from './layout/nav-bar/nav-bar.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { ShowAuthedDirective } from './show-authed.directive';
+import { PurchaseReceiptComponent } from './receipts/purchase-receipt/purchase-receipt.component';
+import { StockIntakeReceiptComponent } from './receipts/stock-intake-receipt/stock-intake-receipt.component';
+import { UserRoleDirective } from './user-role.directive';
 
 @NgModule({
   declarations: [
     SideBarComponent,
     NavBarComponent,
     FooterComponent,
+    PurchaseReceiptComponent,
+    StockIntakeReceiptComponent,
+    ShowAuthedDirective,
+    UserRoleDirective,
   ],
   imports: [
     CommonModule,
@@ -45,6 +53,10 @@ import { FooterComponent } from './layout/footer/footer.component';
     SideBarComponent,
     NavBarComponent,
     FooterComponent,
+    PurchaseReceiptComponent,
+    StockIntakeReceiptComponent,
+    ShowAuthedDirective,
+    UserRoleDirective,
   ]
 })
 export class SharedModule { }

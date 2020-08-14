@@ -54,6 +54,7 @@ export class UserService {
   setAuth(user) {
     // Save JWT sent from server in localstorage
     this.jwtService.saveToken(user.token);
+    this.jwtService.saveRole(user.user.authorities[0].authority);
     //console.log('token has been set!')
     // Set current user data into observable
     this.currentUserSubject.next(user.user);
@@ -64,6 +65,7 @@ export class UserService {
   purgeAuth() {
     // Remove JWT from localstorage
     this.jwtService.destroyToken();
+    this.jwtService.destroyRole();
     // Set current user to an empty object
     this.currentUserSubject.next({} as User);
     // Set auth status to false
@@ -88,7 +90,7 @@ export class UserService {
 
   register(data): Observable<any> {
 
-    return this.apiService.post('/auth/signup' , data)
+      return this.apiService.post('/auth/signup' , data)
       .pipe(map(
         res => {
         console.log(res)
@@ -99,6 +101,11 @@ export class UserService {
           return err
         }
     ));
+
+  }
+
+  getUsers(): Observable<any>{
+    return this.http.get(API_ENDPOINT + '/users');
   }
 
   getCurrentUser(): User {
@@ -117,7 +124,7 @@ export class UserService {
   // Update the user on the server (email, pass, etc)
   update(id, user): Observable<any> {
     return this.http
-    .post(API_ENDPOINT + '/auth/userinfo/' + id, user)
+    .put(API_ENDPOINT + '/users/' + id, user)
     .pipe(map(data => {
       // Update the currentUser observable
       // this.currentUserSubject.next(data);

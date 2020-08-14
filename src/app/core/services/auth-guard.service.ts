@@ -4,21 +4,20 @@ import { Observable } from 'rxjs';
 
 import { UserService } from './user.service';
 import { take, catchError } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(
-    private router: Router,
-    private userService: UserService
-  ) {}
 
-    canActivate(
-      route: ActivatedRouteSnapshot,
-      state: RouterStateSnapshot
-    ): Observable<boolean> {
+  constructor(public auth: AuthService,
+              public router: Router) {}
 
-    return this.userService.isAuthenticated.pipe(take(1))
-      .pipe(catchError((err) => this.router.navigateByUrl('/login')));
-
+	canActivate(): boolean {
+		if (!this.auth.isAuthenticated()) {
+			this.router.navigate([ '/login' ]);
+			return false;
+		}
+		return true;
   }
+
 }

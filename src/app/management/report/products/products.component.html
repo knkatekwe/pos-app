@@ -7,7 +7,7 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
+              <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
               <li class="breadcrumb-item active">Products in Store</li>
             </ol>
           </div><!-- /.col -->
@@ -30,8 +30,8 @@
               <tr *ngFor="let item of items">
                 <td>{{item.code}}</td>
                 <td>{{item.discription}}</td>
-                <td>$ZWL {{item.unicPrice.toFixed(2)}}</td>
-                <td>$ZWL {{item.purchasePrice.toFixed(2)}}</td>
+                <td>{{item.unicPrice | currency: 'USD'}}</td>
+                <td>{{item.purchasePrice  | currency: 'USD'}}</td>
                 <td>{{item.qtyOnHand}}</td>
               </tr>
               </tbody>

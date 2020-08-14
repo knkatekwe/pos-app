@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import { Observable } from 'rxjs';
-import { map, tap, debounceTime, distinctUntilChanged, switchMap, flatMap } from 'rxjs/operators';
+import { tap, debounceTime, distinctUntilChanged, switchMap, flatMap } from 'rxjs/operators';
 import { Items } from '../core/models/items';
 import { PaymentType } from '../core/models/payment-type';
 import { OrdersDetail } from '../core/models/orders-detail';
@@ -126,7 +126,7 @@ inputFormatBandListValue(value: any)   {
     );
   }
 
-  SelectOrderDetails(): void {
+  SelectOrderDetails(){
     // const total = this.elem.nativeElement.querySelector('#total').value;
     const qty = this.elem.nativeElement.querySelector('#qty').value;
     // const qtyonhand = this.elem.nativeElement.querySelector('#qtyonhand').value;
@@ -159,8 +159,8 @@ inputFormatBandListValue(value: any)   {
       return;
     }
 
-    this.Total = qty * (this.searchedItems.unicPrice + (this.searchedItems.unicPrice * (this.rate.value / 100)));
-    this.FullTotal = this.FullTotal + this.Total;
+    this.Total = qty * (this.searchedItems.unicPrice * this.rate.value);//total for item
+    this.FullTotal = this.FullTotal + this.Total;//grand total for all items
     const price = this.FullTotal.toFixed(2);
     console.log(price);
 
@@ -171,7 +171,7 @@ inputFormatBandListValue(value: any)   {
     this.orderDetail_PKDto = new OrdersDetailPK();
     this.orderDetail = new OrdersDetail();
     this.orderDetail.quantity = qty;
-    this.orderDetail.unitprice = (this.searchedItems.unicPrice + (this.searchedItems.unicPrice * (this.rate.value / 100)));
+    this.orderDetail.unitprice = (this.searchedItems.unicPrice * this.rate.value);
     this.orderDetail.item = this.searchedItems;
     this.orderDetail.orders = this.orders;
     this.orderDetail.orderDetail_PKDto = this.orderDetail_PKDto;
@@ -207,8 +207,8 @@ inputFormatBandListValue(value: any)   {
       (result) => {
         if (result) {
           alert('Order has been saved successfully');
-          // this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
+          this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          //this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
           this.route.navigate(['/main/place-order']);
         });
         } else {
@@ -219,7 +219,7 @@ inputFormatBandListValue(value: any)   {
     );
   }
 // delete item from order list
-  removeItem(i: number, price: number): void {
+  removeItem(i: number, price: number){
     if (confirm('Are you sure you want to remove this item?')) {
       console.log(i);
       this.selectedItems.splice(i, 1);

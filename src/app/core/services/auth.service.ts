@@ -4,37 +4,31 @@ import {Observable} from 'rxjs/index';
 import {MAIN_URL} from './payment-type.service';
 import {map} from 'rxjs/internal/operators';
 import {Router} from '@angular/router';
-import { User } from '../models/user';
+import { User, Role } from '../models/user';
+import { JwtService } from './jwt.service';
 
 const URL = '/api/v1/login';
 
 @Injectable()
 export class AuthService {
 
-  constructor(private http: HttpClient, private router: Router) {
+  constructor(private http: HttpClient,
+              private router: Router,
+              private jwtService: JwtService) {
   }
 
-  login(user: User): Observable<boolean> {
-    return this.http.post<boolean>(MAIN_URL + URL, user)
-      .pipe(
-        map((result) => {
-          sessionStorage.setItem('token', result + '');
-          if (result) {
-            this.router.navigate(['/main/dashboard']);
-          }
-          return result;
-        })
-      );
-  }
-
-  isAuthenticated(): boolean {
-    if (sessionStorage.getItem('token')) {
-      return sessionStorage.getItem('token') == 'false' ? false : true;
+  public isAuthenticated(): boolean {
+    const token = this.jwtService.getToken()
+    if(!token){
+      console.log('there is no token')
+      return false
     }
+    console.log('yes, token is there')
+    return true
   }
 
-  logout(): void {
-    sessionStorage.removeItem('token');
-    this.router.navigate(['/login']);
+  hasRole(role: Role){
+    return this.isAuthenticated() && this.jwtService.getRole() === role;
   }
+
 }

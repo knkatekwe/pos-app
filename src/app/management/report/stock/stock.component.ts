@@ -13,7 +13,7 @@ declare var $: any;
 export class StockComponent implements OnInit {
 
   stock: Array<Stock> = [];
-  stockDetails: Array<StockDetail> = [];
+  stockDetail: Stock;
   // Must be declared as "any", not as "DataTables.Settings"
   dtOptions: any = {};
 
@@ -40,7 +40,7 @@ export class StockComponent implements OnInit {
     this.dataTable.DataTable();
   }
 
-  loadAllStock(): void {
+  loadAllStock(){
     this.stockService.getAllStock().subscribe(
       (result) => {
         this.stock = result;
@@ -51,11 +51,11 @@ export class StockComponent implements OnInit {
   }
 
 // retrieve stock details from api
-  loadStockDetails(sId: number): void {
-    this.stockService.getAllStockDetails(sId).subscribe(
+  loadStock(sId: number){
+    this.stockService.getStock(sId).subscribe(
       (result) => {
-        this.stockDetails = result;
-        console.log(this.stockDetails);
+        this.stockDetail = result;
+        console.log(this.stockDetail);
       }
     );
 

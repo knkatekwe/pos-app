@@ -6,16 +6,17 @@ import { OrderService } from '../core/services/orders.service';
 @Component({
 	selector: 'app-dashboard',
 	templateUrl: './dashboard.component.html',
-	styleUrls: [ './dashboard.component.css' ]
 })
 export class DashboardComponent implements OnInit {
 	// totalPaymentTypes = 20;
 	totalItems: number;
 	totalOrders: number;
 	totalAllRoundAmount: number;
-	totalForCash: number;
+	totalForUsd: number;
 	totalForEcoCash: number;
-	totalForSwipe: number;
+  totalForSwipe: number;
+  totalForBond: number;
+	totalForRands: number;
 
 	// tslint:disable-next-line: max-line-length
 	constructor(
@@ -31,7 +32,9 @@ export class DashboardComponent implements OnInit {
 		this.getAllRoundAmountTotal();
 		this.getAllAmountForCashTotal();
 		this.getAllAmountForEcoCashTotal();
-		this.getAllAmountForSwipeTotal();
+    this.getAllAmountForSwipeTotal();
+    this.getAllAmountForRands()
+    this.getAllAmountForBondNotes()
 	}
 
 	// getTotalPaymentTypes(): void {
@@ -63,8 +66,8 @@ export class DashboardComponent implements OnInit {
 	}
 
 	getAllAmountForCashTotal(): void {
-		this.orderService.getTotalAmountForPaymentTypeToday('Cash').subscribe((result) => {
-			this.totalForCash = result;
+		this.orderService.getTotalAmountForPaymentTypeToday('USD').subscribe((result) => {
+			this.totalForUsd = result;
 			console.log(result);
 		});
 	}
@@ -79,6 +82,20 @@ export class DashboardComponent implements OnInit {
 	getAllAmountForSwipeTotal(): void {
 		this.orderService.getTotalAmountForPaymentTypeToday('Swipe').subscribe((result) => {
 			this.totalForSwipe = result;
+			console.log(result);
+		});
+  }
+
+  getAllAmountForBondNotes(): void {
+		this.orderService.getTotalAmountForPaymentTypeToday('Bond Notes').subscribe((result) => {
+			this.totalForBond = result;
+			console.log(result);
+		});
+  }
+
+  getAllAmountForRands(): void {
+		this.orderService.getTotalAmountForPaymentTypeToday('Rand').subscribe((result) => {
+			this.totalForRands = result;
 			console.log(result);
 		});
 	}

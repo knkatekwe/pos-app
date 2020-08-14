@@ -19,8 +19,8 @@ export class StockService {
 
   }
 
-  getAllStockDetails(sId: number): Observable<Array<StockDetail>> {
-    return this.http.get<Array<StockDetail>>(MAIN_URL + URL + '/' + sId + '/details');
+  getStock(sId: number): Observable<Stock> {
+    return this.http.get<Stock>(MAIN_URL + URL + '/' + sId);
 
   }
 

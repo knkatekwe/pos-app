@@ -15,12 +15,12 @@ export class OrderService {
   }
 
   getAllOrders(): Observable<Array<Orders>> {
-    return this.http.get<Array<Orders>>(MAIN_URL + URL + '/today');
+    return this.http.get<Array<Orders>>(MAIN_URL + URL);
 
   }
 
-  getAllOrderDetails(oId: number): Observable<Array<OrdersDetail>> {
-    return this.http.get<Array<OrdersDetail>>(MAIN_URL + URL + '/' + oId + '/details');
+  getAllOrderDetails(oId: number): Observable<Orders> {
+    return this.http.get<Orders>(MAIN_URL + URL + '/' + oId);
 
   }
 

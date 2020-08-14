@@ -27,6 +27,9 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
+
+    this.userService.purgeAuth();
+
 		this.failed = false;
 		this.form = this.formBuilder.group({
 			username: [ '', Validators.required ],
@@ -51,7 +54,7 @@ export class LoginComponent implements OnInit {
 		//this.errors = {errors: {}};
 
 		const credentials = this.form.value;
-		console.log(credentials);
+		//console.log(credentials);
 		this.userService.login(credentials).subscribe(
 			(data) => {
 				console.log('login successful!');
@@ -60,10 +63,8 @@ export class LoginComponent implements OnInit {
 			(err) => {
 				console.log(err);
 				//this.errors = err;
-				this.isSubmitting = false;
-        this.failed = true;
-        timer(500)
-        this.failed = false
+        this.isSubmitting = false;
+        alert('Failed to login...!' + err)
 			}
 		);
 	}

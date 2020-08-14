@@ -9,7 +9,7 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a routerLink="/main/dashboard" href="#">Home</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
           <li class="breadcrumb-item active">Remove From Stock</li>
         </ol>
       </div><!-- /.col -->
@@ -125,10 +125,10 @@
         <tr *ngFor="let SelectItem of selectedItems; let i = index">
           <td>{{SelectItem.item.code}}</td>
           <td>{{SelectItem.item.discription}}</td>
-          <td>$ZWL {{SelectItem.item.unicPrice}}</td>
-          <td>$ZWL {{SelectItem.purchasePrice}}</td>
+          <td>{{SelectItem.item.unicPrice  | currency: 'USD'}}</td>
+          <td>$ZWL {{SelectItem.purchasePrice  | currency: 'USD'}}</td>
           <td>{{SelectItem.quantity}}</td>
-          <td>$ZWL {{SelectItem.quantity * SelectItem.unitprice}}</td>
+          <td>$ZWL {{SelectItem.quantity * SelectItem.unitprice  | currency: 'USD'}}</td>
           <td>
             <button (click)="removeItem(i, SelectItem.quantity * SelectItem.unitprice)" class="btn btn-sm btn-outline-danger">Remove</button>
           </td>
@@ -151,7 +151,7 @@
       <div class="col-md-3 offset-md-3">
         <label for="total"><h3>Total</h3></label>
         <input type="text" class="form-control" id="total" placeholder="" name="total"
-               value="$ZWL {{FullTotal}}" disabled required>
+               value="{{FullTotal  | currency: 'USD'}}" disabled required>
       </div>
     </div>
 

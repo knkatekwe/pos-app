@@ -10,6 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { ManagementModule } from './management/management.module';
 import { PlaceOrderModule } from './place-order/place-order.module';
 import { CoreModule } from './core/core.module';
+import { MainComponent } from './main/main.component';
+import { MainModule } from './main/main.module';
 
 @NgModule({
   declarations: [
@@ -20,6 +22,7 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     SharedModule,
     CoreModule,
+    MainModule,
     InventoryModule,
     DashboardModule,
     AuthModule,

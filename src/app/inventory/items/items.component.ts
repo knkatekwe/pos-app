@@ -60,11 +60,11 @@ export class ItemsComponent implements OnInit {
       (result) => {
         if (result) {
           console.log(this.selectedItems);
-          alert('Items has been saved successfully');
+          alert('Product has been saved successfully');
           this.clear();
           this.loadAllItems();
         } else {
-          alert('Failed to save the Items');
+          alert('Failed to save the product');
         }
       }
     );
@@ -72,13 +72,13 @@ export class ItemsComponent implements OnInit {
   }
 
   deletItems(itemsID: Items): void {
-    if (confirm('Are you sure you want to delete this customer?')) {
+    if (confirm('Are you sure you want to delete this product?')) {
       this.itemService.deletePaymentType(itemsID.code).subscribe(
         (result) => {
           if (result) {
-            alert('Items has been Deleted successfully');
+            alert('Product has been Deleted successfully');
           } else {
-            alert('Failed to deleted Items');
+            alert('Failed to deleted product');
           }
           this.loadAllItems();
         }

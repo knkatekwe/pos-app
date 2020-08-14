@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, tap, debounceTime, distinctUntilChanged, switchMap, flatMap } from 'rxjs/operators';
+import { tap, debounceTime, distinctUntilChanged, switchMap, flatMap } from 'rxjs/operators';
 import { Router } from '@angular/router';
 import { Items } from 'src/app/core/models/items';
 import { PaymentType } from 'src/app/core/models/payment-type';
@@ -16,7 +16,6 @@ import { ItemService } from 'src/app/core/services/item.service';
 @Component({
 	selector: 'app-place-stock',
 	templateUrl: './place-stock.component.html',
-	styleUrls: [ './place-stock.component.css' ]
 })
 export class PlaceStockComponent implements OnInit {
 	model: Items = new Items();
@@ -164,7 +163,7 @@ export class PlaceStockComponent implements OnInit {
 		this.selectedItems.push(this.stockDetail);
 
 		console.log(this.selectedItems);
-		this.qtyF.reset();
+    this.qtyF.reset();
 		// qtyOHF.reset();
 		this.codeF.reset();
 		// this.unitPrice.reset();
@@ -189,9 +188,9 @@ export class PlaceStockComponent implements OnInit {
 			if (result) {
 				alert('Stock has been saved successfully');
 				//
-				// this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-				this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
-					this.route.navigate([ '/main/place-stock' ]);
+				this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+				//this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
+					this.route.navigate([ '/main/inventory/place-stock' ]);
 				});
 			} else {
 				alert('Failed to save the Stock');
