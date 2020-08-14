@@ -16,7 +16,7 @@ const appRoutes: Routes = [
 
 	{ path: '', pathMatch: 'full', redirectTo: '/main/dashboard' }
   ,
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '/main/dashboard' }
 ];
 
 @NgModule({
