@@ -1,9 +1,8 @@
 import {Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs/index';
-import {MAIN_URL} from './payment-type.service';
 import { Stock } from '../models/stock';
-import { StockDetail } from '../models/stock-detail';
+import { API_ENDPOINT } from './api.service';
 
 const URL = '/api/v1/stock';
 
@@ -15,17 +14,17 @@ export class StockService {
   }
 
   getAllStock(): Observable<Array<Stock>> {
-    return this.http.get<Array<Stock>>(MAIN_URL + URL);
+    return this.http.get<Array<Stock>>(API_ENDPOINT + '/stock');
 
   }
 
   getStock(sId: number): Observable<Stock> {
-    return this.http.get<Stock>(MAIN_URL + URL + '/' + sId);
+    return this.http.get<Stock>(API_ENDPOINT + '/stock/' + sId);
 
   }
 
   getTotalStock(): Observable<number> {
-    return this.http.get<number>(MAIN_URL + URL + '/count');
+    return this.http.get<number>(API_ENDPOINT + '/stock/count');
 
   }
 

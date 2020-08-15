@@ -1,9 +1,8 @@
 import {Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-import {MAIN_URL} from './payment-type.service';
-import { catchError, map, tap } from 'rxjs/operators';
 import { Items } from '../models/items';
+import { API_ENDPOINT } from './api.service';
 
 const URL = '/api/v1/items';
 
@@ -15,29 +14,29 @@ export class ItemService {
   }
 
   getAllItems(): Observable<Array<Items>> {
-    return this.http.get<Array<Items>>(MAIN_URL + URL);
+    return this.http.get<Array<Items>>(API_ENDPOINT + '/items');
 
   }
 
   getAllProducts(): Observable<Array<Items>> {
-    return this.http.get<Array<Items>>(MAIN_URL + URL + '/findAll');
+    return this.http.get<Array<Items>>(API_ENDPOINT + '/items/findAll');
 
   }
 
   saveItems(item: Items): Observable<boolean> {
-    return this.http.post<boolean>(MAIN_URL + URL, item);
+    return this.http.post<boolean>(API_ENDPOINT + '/items', item);
   }
 
   deletePaymentType(id: string): Observable<boolean> {
-    return this.http.delete<boolean>(MAIN_URL + URL + '/' + id);
+    return this.http.delete<boolean>(API_ENDPOINT + '/items/' + id);
   }
 
   getTotalItems(): Observable<number> {
-    return this.http.get<number>(MAIN_URL + URL + '/count');
+    return this.http.get<number>(API_ENDPOINT + '/items/count');
   }
 
   searchItem(code: string): Observable<Items> {
-    return this.http.get<Items>(MAIN_URL + URL + '/' + code);
+    return this.http.get<Items>(API_ENDPOINT + '/items/' + code);
   }
 
   public findProductByCode(code: string): Observable<Items[]> {
@@ -45,7 +44,7 @@ export class ItemService {
         return of([]);
   }
   // tslint:disable-next-line: align
-  return this.http.get<Items[]>(MAIN_URL + URL + '/product' + '/' + code);
+  return this.http.get<Items[]>(API_ENDPOINT + '/items/product' + '/' + code);
 }
 
 }
