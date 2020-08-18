@@ -6,6 +6,7 @@ export class AdjustmentDetail {
 
   quantity: number;
   unitprice: number;
+  retailprice: number;
   purchasePrice: number;
   item: Items;
   adjustment: Adjustment;

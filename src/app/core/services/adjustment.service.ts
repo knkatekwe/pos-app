@@ -16,8 +16,8 @@ export class AdjustmentService {
     return this.http.get<Array<Adjustment>>(API_ENDPOINT + '/adjustment');
   }
 
-  getAllAdjustmentDetails(sId: number): Observable<Array<AdjustmentDetail>> {
-    return this.http.get<Array<AdjustmentDetail>>(API_ENDPOINT + '/adjustment/' + sId + '/details');
+  getAdjustment(sId: number): Observable<Adjustment> {
+    return this.http.get<Adjustment>(API_ENDPOINT + '/adjustment/' + sId);
   }
 
   getTotalAdjustment(): Observable<number> {

@@ -8,7 +8,7 @@ import { StockDetail } from 'src/app/core/models/stock-detail';
 import { StockDetailPK } from 'src/app/core/models/stock-detail-pk';
 import { PlaceStock } from 'src/app/core/models/place-stock';
 import { Stock } from 'src/app/core/models/stock';
-import { NgForm, FormControl } from '@angular/forms';
+import { NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { PlaceStockServiceService } from 'src/app/core/services/place-stock-service.service';
 import { PaymentTypeService } from 'src/app/core/services/payment-type.service';
 import { ItemService } from 'src/app/core/services/item.service';
@@ -36,26 +36,31 @@ export class PlaceStockComponent implements OnInit {
 	@ViewChild('code', { static: false })
 	nameField: ElementRef;
 	@ViewChild('qty', { static: false })
-	qtyField: ElementRef;
+  qtyField: ElementRef;
+
+  form: FormGroup;
 
 	itemz: Observable<Items[] | Observable<Items[]>>;
 	itemCode = new FormControl();
 	codeF = new FormControl();
 	description = new FormControl();
-	unitPrice = new FormControl();
+  unitPrice = new FormControl();
+  retailPrice = new FormControl();
 	qtyF = new FormControl();
 	qtyOHF = new FormControl();
 	purchasePriceF = new FormControl();
-	unitPriceF = new FormControl();
+  unitPriceF = new FormControl();
+  retailPriceF = new FormControl();
 	itemzLoading = false;
 
 	// tslint:disable-next-line: max-line-length
 	constructor(
 		private placeStockService: PlaceStockServiceService,
 		private paymentTypeService: PaymentTypeService,
-		private itemService: ItemService,
+    private itemService: ItemService,
+    private formBuilder: FormBuilder,
 		private route: Router,
-		private elem: ElementRef
+		private elem: ElementRef,
 	) {}
 
 	ngOnInit() {
@@ -101,14 +106,14 @@ export class PlaceStockComponent implements OnInit {
 		return value;
 	}
 
-	getPaymentTypeId(): void {
+	getPaymentTypeId(){
 		this.paymentTypeService.getAllPaymentTypes().subscribe((result) => {
 			this.paymentTypes = result;
 			console.log(this.paymentTypes);
 		});
 	}
 
-	searchItems(event: any): void {
+	searchItems(event: any){
 		this.itemService.searchItem(event.target.value).subscribe((result) => {
 			this.searchedItems = result;
 			console.log(this.searchedItems);
@@ -121,7 +126,7 @@ export class PlaceStockComponent implements OnInit {
 		});
 	}
 
-	SelectStockDetails(): void {
+	SelectStockDetails(){
 		const total = this.elem.nativeElement.querySelector('#total').value;
 		const qty = this.elem.nativeElement.querySelector('#qty').value;
 		const purchasePrice = this.elem.nativeElement.querySelector('#purchasePrice').value;
@@ -155,7 +160,8 @@ export class PlaceStockComponent implements OnInit {
 		this.stockDetail = new StockDetail();
 		this.stockDetail.quantity = qty;
 		this.stockDetail.purchasePrice = purchasePrice;
-		this.stockDetail.unitprice = this.searchedItems.unicPrice;
+    this.stockDetail.unitprice = this.searchedItems.unicPrice;
+    this.stockDetail.retailprice = this.searchedItems.retailPrice;
 		this.stockDetail.item = this.searchedItems;
 		this.stockDetail.stock = this.stock;
 		this.stockDetail.stockDetail_PKDto = this.stockDetail_PKDto;
@@ -172,13 +178,13 @@ export class PlaceStockComponent implements OnInit {
 		this.nameField.nativeElement.focus();
 	}
 
-	searchPaymentType(event: any): void {
+	searchPaymentType(event: any){
 		this.paymentTypeService.searchPaymentType(event.target.value).subscribe((result) => {
 			this.searchedPaymentTypes = result;
 			console.log(this.searchedItems);
 		});
 	}
-	addStock(): void {
+	addStock(){
 		this.placeStock = new PlaceStock();
 		this.placeStock.itemsDTO = this.searchedItems;
 		this.placeStock.stockDTO = this.stock;
@@ -199,11 +205,14 @@ export class PlaceStockComponent implements OnInit {
 	}
 
 	// delete item from order list
-	removeItem(i: number, price: number): void {
+	removeItem(i: number, price: number){
 		if (confirm('Are you sure you want to remove this item?')) {
 			console.log(i);
 			this.selectedItems.splice(i, 1);
 			this.FullTotal = this.FullTotal - price;
-		}
-	}
+    }
+    return false
+  }
+
+
 }

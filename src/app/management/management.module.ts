@@ -7,8 +7,8 @@ import { OrdersComponent } from './report/orders/orders.component';
 import { ProductsComponent } from './report/products/products.component';
 import { StockComponent } from './report/stock/stock.component';
 import { ReportComponent } from './report/report.component';
-import { StockService } from '../core/services/stock.service';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { RemovedComponent } from './report/removed/removed.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +18,7 @@ import { ManageUsersComponent } from './manage-users/manage-users.component';
     StockComponent,
     ReportComponent,
     ManageUsersComponent,
+    RemovedComponent,
   ],
   imports: [
     SharedModule,

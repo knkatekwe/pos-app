@@ -39,11 +39,15 @@ export class PlaceOrderComponent implements OnInit {
   codeF = new FormControl();
   description = new FormControl();
   unitPrice = new FormControl();
+  retailPrice = new FormControl();
   qtyF = new FormControl();
   qtyOHF = new FormControl();
   rate = new FormControl();
+  saleType = new FormControl('REGULAR');
+
   itemzLoading = false;
   paymentStatus = false;
+  saleTypeStatus: boolean;
   // @ViewChild('frmItems') frmItems: NgForm;
   @ViewChild('frmItems', {static: false}) frmItems: NgForm;
   @ViewChild('frmItem', {static: false}) frmItem: NgForm;
@@ -57,6 +61,7 @@ export class PlaceOrderComponent implements OnInit {
   ngOnInit() {
     this.getPaymentTypeId();
     this.getItemCode();
+    this.saleTypeStatus = false;
 
     this.itemz = this.itemCode.valueChanges.pipe(
       debounceTime( 400 ),
@@ -65,6 +70,10 @@ export class PlaceOrderComponent implements OnInit {
       switchMap( code => this.itemService.findProductByCode( code ) ),
       tap(() => this.itemzLoading = false ) );
 
+  }
+
+  setSale(sale){
+    this.saleType.value == sale;
   }
 
   search = (text$: Observable<string>) => {
@@ -97,7 +106,7 @@ inputFormatBandListValue(value: any)   {
   return value;
 }
 
-  getPaymentTypeId(): void {
+  getPaymentTypeId(){
     this.paymentTypeService.getAllPaymentTypes().subscribe(
       (result) => {
         this.paymentTypes = result;
@@ -108,7 +117,7 @@ inputFormatBandListValue(value: any)   {
   }
 
 // retrieve products from api
-  searchItems(event: any): void {
+  searchItems(event: any){
     this.itemService.searchItem(event.target.value).subscribe(
       (result) => {
         this.searchedItems = result;
@@ -118,7 +127,7 @@ inputFormatBandListValue(value: any)   {
 
   }
 
-  getItemCode() {
+  getItemCode(){
     this.itemService.getAllItems().subscribe(
       (result) => {
         this.items = result;
@@ -159,19 +168,38 @@ inputFormatBandListValue(value: any)   {
       return;
     }
 
-    this.Total = qty * (this.searchedItems.unicPrice * this.rate.value);//total for item
-    this.FullTotal = this.FullTotal + this.Total;//grand total for all items
+    if(this.saleType.value === "REGULAR"){
+      console.log('this sale is:' + this.saleType.value)
+      this.Total = qty * (this.searchedItems.unicPrice * this.rate.value);//total for item
+      this.FullTotal = this.FullTotal + this.Total;//grand total for all items
+    }else{
+      console.log('this sale is:' + this.saleType.value)
+      this.Total = qty * (this.searchedItems.retailPrice * this.rate.value);//total for item
+      this.FullTotal = this.FullTotal + this.Total;//grand total for all items
+    }
+
+    // this.Total = qty * (this.searchedItems.unicPrice * this.rate.value);//total for item
+    // this.FullTotal = this.FullTotal + this.Total;//grand total for all items
     const price = this.FullTotal.toFixed(2);
-    console.log(price);
+    console.log('Total price is: ' + price);
 
     this.paymentStatus = true;
+    this.saleTypeStatus = true;
 
-    this.orders = new Orders(this.FullTotal, this.searchedPaymentTypes);
+    this.orders = new Orders(this.FullTotal, this.searchedPaymentTypes, this.saleType.value);
     console.log(this.orders.totalPrice);
     this.orderDetail_PKDto = new OrdersDetailPK();
     this.orderDetail = new OrdersDetail();
     this.orderDetail.quantity = qty;
-    this.orderDetail.unitprice = (this.searchedItems.unicPrice * this.rate.value);
+    if(this.saleType.value === "REGULAR"){
+      console.log('this sale is:' + this.saleType.value)
+      this.orderDetail.unitprice = (this.searchedItems.unicPrice * this.rate.value);//
+    }else{
+      console.log('this sale is:' + this.saleType.value)
+      this.orderDetail.unitprice = (this.searchedItems.retailPrice * this.rate.value);//
+    }
+    //this.orderDetail.unitprice = (this.searchedItems.unicPrice * this.rate.value);
+    // this.orderDetail.saleType = this.saleType.value;
     this.orderDetail.item = this.searchedItems;
     this.orderDetail.orders = this.orders;
     this.orderDetail.orderDetail_PKDto = this.orderDetail_PKDto;
@@ -188,7 +216,7 @@ inputFormatBandListValue(value: any)   {
 
   }
 
-  searchPaymentType(event: any): void {
+  searchPaymentType(event: any){
     this.paymentTypeService.searchPaymentType(event.target.value).subscribe(
       (result) => {
         this.searchedPaymentTypes = result;
@@ -197,7 +225,7 @@ inputFormatBandListValue(value: any)   {
     );
   }
 
-  addOrder(): void {
+  addOrder(){
     this.placeOrder = new PlaceOrder();
     this.placeOrder.itemsDTO = this.searchedItems;
     this.placeOrder.orderDTO = this.orders;
@@ -209,7 +237,7 @@ inputFormatBandListValue(value: any)   {
           alert('Order has been saved successfully');
           this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
           //this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
-          this.route.navigate(['/main/place-order']);
+          this.route.navigate(['/main/place-order/receipt']);
         });
         } else {
           alert('Failed to save the Order');
@@ -225,6 +253,16 @@ inputFormatBandListValue(value: any)   {
       this.selectedItems.splice(i, 1);
       this.FullTotal = this.FullTotal - price;
     }
+    return false
   }
+
+  saleTypes: {name: string}[]=[
+    {
+      "name": "REGULAR"
+    },
+    {
+      "name": "RETAIL"
+    }
+  ]
 
 }

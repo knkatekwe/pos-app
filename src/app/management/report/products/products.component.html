@@ -21,8 +21,9 @@
               <tr>
                 <th>Code</th>
                 <th>Description</th>
-                <th>U/Price</th>
-                <th>P/Price</th>
+                <th>Unit Price</th>
+                <th>Retail Price</th>
+                <th>Purchase Price</th>
                 <th>Qty</th>
               </tr>
               </thead>
@@ -31,6 +32,7 @@
                 <td>{{item.code}}</td>
                 <td>{{item.discription}}</td>
                 <td>{{item.unicPrice | currency: 'USD'}}</td>
+                <td>{{item.retailPrice | currency: 'USD'}}</td>
                 <td>{{item.purchasePrice  | currency: 'USD'}}</td>
                 <td>{{item.qtyOnHand}}</td>
               </tr>

@@ -2,7 +2,7 @@ import {PaymentType} from './payment-type';
 import { User } from './user';
 
 export class Adjustment {
-  sId: number;
+  aId: number;
   date: Date;
   totalPrice: number;
   user: User;

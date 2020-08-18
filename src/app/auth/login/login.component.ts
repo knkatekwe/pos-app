@@ -1,15 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { timer } from 'rxjs';
 import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
 	selector: 'app-login',
-	templateUrl: './login.component.html',
+	templateUrl: './login.component.html'
 })
 export class LoginComponent implements OnInit {
-
 	form: FormGroup;
 	loading = false;
 	submitted = false;
@@ -22,22 +20,20 @@ export class LoginComponent implements OnInit {
 		private route: ActivatedRoute,
 		private router: Router,
 		private userService: UserService
-	) // private alertService: AlertService
-	{
+	) {
+		this.userService.purgeAuth();
 	}
 
 	ngOnInit() {
-
-    this.userService.purgeAuth();
-
 		this.failed = false;
 		this.form = this.formBuilder.group({
 			username: [ '', Validators.required ],
-			password: [ '', Validators.required ],
+			password: [ '', Validators.required ]
 		});
 
-		// get return url from route parameters or default to '/'
-		// this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
+		this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+			this.router.navigate([ '/login' ]);
+		});
 	}
 
 	// convenience getter for easy access to form fields
@@ -63,8 +59,8 @@ export class LoginComponent implements OnInit {
 			(err) => {
 				console.log(err);
 				//this.errors = err;
-        this.isSubmitting = false;
-        alert('Failed to login...!' + err)
+				this.isSubmitting = false;
+				alert('Failed to login...!' + err);
 			}
 		);
 	}

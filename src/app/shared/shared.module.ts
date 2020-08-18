@@ -14,6 +14,8 @@ import { ShowAuthedDirective } from './show-authed.directive';
 import { PurchaseReceiptComponent } from './receipts/purchase-receipt/purchase-receipt.component';
 import { StockIntakeReceiptComponent } from './receipts/stock-intake-receipt/stock-intake-receipt.component';
 import { UserRoleDirective } from './user-role.directive';
+import { ReceiptPrintComponent } from './receipts/receipt-print/receipt-print.component';
+import { RemovalReceiptComponent } from './receipts/removal-receipt/removal-receipt.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { UserRoleDirective } from './user-role.directive';
     StockIntakeReceiptComponent,
     ShowAuthedDirective,
     UserRoleDirective,
+    ReceiptPrintComponent,
+    RemovalReceiptComponent
   ],
   imports: [
     CommonModule,
@@ -57,6 +61,8 @@ import { UserRoleDirective } from './user-role.directive';
     StockIntakeReceiptComponent,
     ShowAuthedDirective,
     UserRoleDirective,
+    ReceiptPrintComponent,
+    RemovalReceiptComponent
   ]
 })
 export class SharedModule { }

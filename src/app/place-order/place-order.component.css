@@ -8,3 +8,7 @@
 .searchList ul li:hover {
   background: #bbb;
 }
+
+label{
+  font-size: 12px;
+}

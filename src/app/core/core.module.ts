@@ -21,6 +21,8 @@ import { PlaceOrderComponentCandeactivateGuard } from './guards/place-order-comp
 import { AdjustStockComponentCandeactivateGuard } from './guards/adjust-stock-component.guard';
 import { PlaceStockComponentCandeactivateGuard } from './guards/place-stock-component.guard';
 import { AuthGuard } from './services/auth-guard.service';
+import { PrintService } from './services/print.service';
+import { CurrentReceiptResolver } from './services/receipt-resolver.service';
 
 @NgModule({
 	declarations: [],
@@ -47,6 +49,8 @@ import { AuthGuard } from './services/auth-guard.service';
 		JwtService,
     CookieService,
     AuthGuard,
+    PrintService,
+    CurrentReceiptResolver,
 	]
 })
 export class CoreModule {}

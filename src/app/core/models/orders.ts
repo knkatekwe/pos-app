@@ -7,12 +7,14 @@ export class Orders {
   date: Date;
   totalPrice: number;
   paymentType: PaymentType;
+  saleType: string;
   user: User;
   orderDetails: OrdersDetail;
 
-  constructor(totalPrice: number, paymentType: PaymentType) {
+  constructor(totalPrice: number, paymentType: PaymentType, saleType: string) {
     // this.oId = oId;
     // this.date = date;
+    this.saleType = saleType
     this.totalPrice = totalPrice;
     this.paymentType = paymentType;
   }

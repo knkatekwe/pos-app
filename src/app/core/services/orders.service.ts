@@ -23,6 +23,12 @@ export class OrderService {
 
   }
 
+  getOrderDetail(): Observable<Orders> {
+    return this.http.get<Orders>(API_ENDPOINT + '/orders/last');
+
+  }
+
+
   getTotalOrders(): Observable<number> {
     return this.http.get<number>(API_ENDPOINT + '/orders/count');
   }

@@ -41,6 +41,7 @@ export class AdjustStockComponent implements OnInit {
   codeF = new FormControl();
   description = new FormControl();
   unitPrice = new FormControl();
+  retailPrice = new FormControl();
   purchasePrice = new FormControl();
   qtyF = new FormControl();
   qtyOHF = new FormControl();
@@ -91,7 +92,7 @@ inputFormatBandListValue(value: any)   {
   return value;
 }
 
-  getPaymentTypeId(): void {
+  getPaymentTypeId(){
     this.paymentTypeService.getAllPaymentTypes().subscribe(
       (result) => {
         this.paymentTypes = result;
@@ -102,7 +103,7 @@ inputFormatBandListValue(value: any)   {
   }
 
 
-  searchItems(event: any): void {
+  searchItems(event: any){
     this.itemService.searchItem(event.target.value).subscribe(
       (result) => {
         this.searchedItems = result;
@@ -120,7 +121,7 @@ inputFormatBandListValue(value: any)   {
     );
   }
 
-  SelectAdjustmentDetails(): void {
+  SelectAdjustmentDetails(){
 
     const total = this.elem.nativeElement.querySelector('#total').value;
     const qty = this.elem.nativeElement.querySelector('#qty').value;
@@ -156,6 +157,7 @@ inputFormatBandListValue(value: any)   {
     this.adjustmentDetail.quantity = qty;
     this.adjustmentDetail.purchasePrice = purchasePrice;
     this.adjustmentDetail.unitprice = this.searchedItems.unicPrice;
+    this.adjustmentDetail.retailprice = this.searchedItems.retailPrice;
     this.adjustmentDetail.item = this.searchedItems;
     this.adjustmentDetail.adjustment = this.adjustment;
     this.adjustmentDetail.adjustmentDetail_PKDto = this.adjustmentDetail_PKDto;
@@ -172,7 +174,7 @@ inputFormatBandListValue(value: any)   {
     this.nameField.nativeElement.focus();
   }
 
-  searchPaymentType(event: any): void {
+  searchPaymentType(event: any){
     this.paymentTypeService.searchPaymentType(event.target.value).subscribe(
       (result) => {
         this.searchedPaymentTypes = result;
@@ -180,7 +182,7 @@ inputFormatBandListValue(value: any)   {
       }
     );
   }
-  addAdjustment(): void {
+  addAdjustment(){
     this.placeAdjustment = new PlaceAdjustment();
     this.placeAdjustment.itemsDTO = this.searchedItems;
     this.placeAdjustment.adjustmentDTO = this.adjustment;
@@ -203,12 +205,13 @@ inputFormatBandListValue(value: any)   {
   }
 
  // delete item from order list
- removeItem(i: number, price: number): void {
+ removeItem(i: number, price: number){
   if (confirm('Are you sure you want to remove this item?')) {
     console.log(i);
     this.selectedItems.splice(i, 1);
     this.FullTotal = this.FullTotal - price;
   }
+  return false
 }
 
 }

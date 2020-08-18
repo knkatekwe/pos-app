@@ -2,7 +2,7 @@
   <div class="card">
     <div class="card-header p-4">
       <div class="float-right">
-        <h3 class="mb-0">Stock Intake #{{stock.sId}}</h3>
+        <h3 class="mb-0">Stock Removal #{{stock.aId}}</h3>
         {{stock.date}}
       </div>
     </div>
@@ -27,23 +27,23 @@
             <tr>
               <th class="center">Code</th>
               <th>Description</th>
-              <th>Qty</th>
+              <th>Quantity</th>
               <th class="right">Purchase Price</th>
               <th class="center">Unit Sale Price</th>
-              <th class="right">Retail Sale Price</th>
+              <!-- <th class="right">Retail Sale Price</th> -->
               <th class="right">Total</th>
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of stock.stockDetails">
+            <tr *ngFor="let item of stock.adjustmentDetails">
               <td class="center">{{item.item.code}}</td>
               <td class="left strong">{{item.item.discription}}</td>
               <td class="right">{{item.quantity}}</td>
               <td class="center">{{item.purchasePrice | currency: 'USD'}}</td>
               <td class="left">{{item.unitprice  | currency: 'USD'}}</td>
 
-              <td class="left">
-                {{item.retailprice  | currency: 'USD'}}</td>
+              <!-- <td class="left">
+                {{item.retailprice  | currency: 'USD'}}</td> -->
               <td class="right">{{item.purchasePrice * item.quantity  | currency: 'USD'}}</td>
             </tr>
 

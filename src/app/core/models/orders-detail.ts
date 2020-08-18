@@ -6,6 +6,7 @@ export class OrdersDetail {
 
   quantity: number;
   unitprice: number;
+  saleType: string;
   item: Items;
   orders: Orders;
   orderDetail_PKDto: OrdersDetailPK;

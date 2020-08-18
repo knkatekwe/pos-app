@@ -6,6 +6,7 @@ export class StockDetail {
 
   quantity: number;
   unitprice: number;
+  retailprice: number;
   purchasePrice: number;
   item: Items;
   stock: Stock;

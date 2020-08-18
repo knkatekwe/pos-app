@@ -5,6 +5,7 @@ export class Items {
   comments: string; // new field
   qtyOnHand: number;
   unicPrice: number ;
+  retailPrice: number;
   purchasePrice: number; // new field
 
 }

@@ -7,6 +7,7 @@ import { ProductsComponent } from './report/products/products.component';
 import { ManagePaymentTypeComponentCandeactivateGuard } from '../core/guards/manage-customer-component-candeactivate.guard';
 import { ReportComponent } from './report/report.component';
 import { ManageUsersComponent } from './manage-users/manage-users.component';
+import { RemovedComponent } from './report/removed/removed.component';
 
 
 const routes: Routes = [
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'stock',
         component: StockComponent
+      },
+      {
+        path: 'removed',
+        component: RemovedComponent
       },
       {
         path: 'products',

@@ -22,7 +22,8 @@
         <th>Attendent</th>
         <th>Date</th>
         <th>Payment</th>
-        <th>T/Price</th>
+        <th>Sale</th>
+        <th>Total Price</th>
         <th></th>
       </tr>
     </thead>
@@ -31,6 +32,7 @@
         <td>{{order.user.username}}</td>
         <td>{{order.date}}</td>
         <td>{{order.paymentType.typeName}}</td>
+        <td>{{order.saleType}}</td>
         <td>{{order.totalPrice | currency: 'USD'}}</td>
         <td>
           <a (click)="loadOrderDetails(order.oId)" class="btn btn-sm btn-outline-warning" data-toggle="modal"

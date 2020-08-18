@@ -10,8 +10,8 @@ import { AuthModule } from './auth/auth.module';
 import { ManagementModule } from './management/management.module';
 import { PlaceOrderModule } from './place-order/place-order.module';
 import { CoreModule } from './core/core.module';
-import { MainComponent } from './main/main.component';
 import { MainModule } from './main/main.module';
+import {NgxPrintModule} from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -28,6 +28,7 @@ import { MainModule } from './main/main.module';
     AuthModule,
     ManagementModule,
     PlaceOrderModule,
+    NgxPrintModule
   ],
   providers: [
   ],
