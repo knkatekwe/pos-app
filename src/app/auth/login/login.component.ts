@@ -31,9 +31,9 @@ export class LoginComponent implements OnInit {
 			password: [ '', Validators.required ]
 		});
 
-		this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-			this.router.navigate([ '/login' ]);
-		});
+		// this.router.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
+		// 	this.router.navigate([ '/login' ]);
+		// });
 	}
 
 	// convenience getter for easy access to form fields
@@ -53,14 +53,19 @@ export class LoginComponent implements OnInit {
 		//console.log(credentials);
 		this.userService.login(credentials).subscribe(
 			(data) => {
-				console.log('login successful!');
-				this.router.navigateByUrl('/');
+				//console.log('login successful!');
+				this.router.navigateByUrl('/main/dashboard');
 			},
 			(err) => {
 				console.log(err);
 				//this.errors = err;
 				this.isSubmitting = false;
-				alert('Failed to login...!' + err);
+				//alert('Failed to login...!' + err);
+				this.failed = true;
+				setTimeout(() => {
+					//<<<---using ()=> syntax
+					this.failed = false;
+				}, 5000);
 			}
 		);
 	}

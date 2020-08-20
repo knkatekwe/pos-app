@@ -7,7 +7,7 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/main/dashboard']">Home</a></li>
           <li class="breadcrumb-item active">Manage Product(s)</li>
         </ol>
       </div><!-- /.col -->
@@ -55,7 +55,7 @@
 
                     <div class="col-md-6 col-12">
                       <p class="form-group">
-                        <label for="txtpurchasePrice">Purchase Price</label>
+                        <label for="txtpurchasePrice">Purchase($)</label>
                         <input [disabled]="manuallySelected" type="number" name="txtpurchasePrice"
                           [(ngModel)]="selectedItems.purchasePrice" id="txtpurchasePrice" class="form-control" min="0"
                           max="1000" step="0.01" value="0.00">
@@ -68,7 +68,7 @@
 
                     <div class="col-md-6 col-12">
                       <p class="form-group">
-                        <label for="txtunicPrice">Unit Price</label>
+                        <label for="txtunicPrice">Retail($)</label>
                         <input type="number" name="txtunicPrice" [(ngModel)]="selectedItems.unicPrice" id="txtunicPrice"
                           class="form-control" min="0" max="1000" step="0.01" value="0.00">
                       </p>
@@ -76,7 +76,7 @@
 
                     <div class="col-md-6 col-12">
                       <p class="form-group">
-                        <label for="txtunicPrice">Retail Price</label>
+                        <label for="txtunicPrice">Wholesale($)</label>
                         <input type="number" name="txtretailPrice" [(ngModel)]="selectedItems.retailPrice"
                           id="txtretailPrice" class="form-control" min="0" max="1000" step="0.01" value="0.00">
                       </p>
@@ -120,9 +120,9 @@
             <tr>
               <th>Code</th>
               <th>Description</th>
-              <th>Unit Price</th>
-              <th>Retail Price</th>
-              <th>Purchase Price</th>
+              <th>Retail($)</th>
+              <th>Wholesale($)</th>
+              <th>Purchase($)</th>
               <th>Qty</th>
               <!-- <th></th> -->
             </tr>

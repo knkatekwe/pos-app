@@ -25,7 +25,7 @@ export class OrderReceiptComponent {
               }
 
   back(){
-    this.router.navigateByUrl('main/place-order')
+    this.router.navigateByUrl('/main/place-order')
   }
 
   printPage() {
@@ -37,7 +37,7 @@ export class OrderReceiptComponent {
       .printDocument();
 
     //this.printService.onDataReady()
-    console.log('...button clicked...')
+    //console.log('...button clicked...')
   }
 
 }

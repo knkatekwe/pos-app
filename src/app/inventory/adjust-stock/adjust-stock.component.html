@@ -9,7 +9,7 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/main/dashboard']">Home</a></li>
           <li class="breadcrumb-item active">Remove From Stock</li>
         </ol>
       </div><!-- /.col -->
@@ -65,49 +65,49 @@
               />
         </div>
 
-        <div class="col-md-3 mb-3">
+        <!-- <div class="col-md-3 mb-3">
           <label for="Discription">Description</label>
           <input type="text" class="form-control" id="Discription" placeholder="" name="discription"
                   [formControl]="description" [(ngModel)]="searchedItems.discription" disabled required>
-        </div>
+        </div> -->
 
-        <div class="col-md-1 mb-3">
-          <label for="unicprice">Unit Price</label>
+        <div class="col-md-2 mb-3">
+          <label for="unicprice">Retail($)</label>
           <input type="number" class="form-control" id="unicprice" placeholder="" name="unicPrice"
                  [(ngModel)]="searchedItems.unicPrice" min="1" max="1000" step="0.01" value="0.00"
                  [formControl]="unitPrice" disabled required>
         </div>
 
-        <div class="col-md-1 mb-3">
-          <label for="retailprice">Retail Price</label>
+        <div class="col-md-2 mb-3">
+          <label for="retailprice">Wholesale($)</label>
           <input type="number" class="form-control" id="retailprice" placeholder="" name="retailPrice"
                  [(ngModel)]="searchedItems.retailPrice" min="1" max="1000" step="0.01" value="0.00"
                  [formControl]="retailPrice" disabled required>
         </div>
 
-        <div class="col-md-1 mb-3">
+        <div class="col-md-2 mb-3">
 
-            <label for="purchasePrice">PurchasePrice</label>
+            <label for="purchasePrice">Purchase($)</label>
             <input type="number" class="form-control" id="purchasePrice" placeholder=""
                   [(ngModel)]="searchedItems.purchasePrice" min="1" max="1000" step="0.01" value="0.00"
                   [formControl]="purchasePrice" disabled name="purchasePrice" required>
 
         </div>
 
-        <div class="col-md-1 mb-3">
+        <div class="col-md-2 mb-3">
           <label for="Qty On Hand">In-stock</label>
           <input type="number" class="form-control" id="Qty On Hand" placeholder="0"  name="qtyonhand"
                 [formControl]="qtyOHF" [(ngModel)]="searchedItems.qtyOnHand" disabled required>
         </div>
 
-        <div class="col-md-1 mb-3">
+        <div class="col-md-2 mb-3">
             <label for="qty">Deduction</label>
             <input #qty type="number" class="form-control" id="qty" placeholder="" min="1" name="qty"
                   [formControl]="qtyF" required>
         </div>
 
         <div class="card-body button">
-          <button class="btn btn-primary" (click)="SelectAdjustmentDetails()">Add To Cart</button>
+          <button class="btn btn-primary" (click)="SelectAdjustmentDetails()">Add</button>
         </div>
      </div>
 
@@ -119,11 +119,11 @@
         <tr>
           <th>Product Code</th>
           <th>Description</th>
-          <th>Unit Price</th>
-          <th>Retail Price</th>
-          <th>Purchase Price</th>
+          <th>Retail($)</th>
+          <th>Wholesale($)</th>
+          <th>Purchase($)</th>
           <th>Qty</th>
-          <th>T/Price</th>
+          <th>Total($)</th>
           <th></th>
         </tr>
         </thead>
@@ -142,15 +142,6 @@
           </td>
         </tr>
         </tbody>
-        <!-- <tfoot>
-        <tr>
-          <th>Item Name</th>
-          <th>Description</th>
-          <th>Unit Price</th>
-          <th>Qty</th>
-          <th></th>
-        </tr>
-        </tfoot> -->
       </table>
     </div>
 
@@ -158,7 +149,7 @@
       <div class="col-md-3 offset-md-3"></div>
       <div class="col-md-3 offset-md-3">
         <label for="total"><h3>Total</h3></label>
-        <input type="text" class="form-control" id="total" placeholder="" name="total"
+        <input type="text" class="form-control" id="total" name="total"
                value="{{FullTotal  | currency: 'USD'}}" disabled required>
       </div>
     </div>

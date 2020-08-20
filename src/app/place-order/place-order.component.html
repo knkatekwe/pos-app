@@ -9,7 +9,7 @@
         </div><!-- /.col -->
         <div class="col-sm-6">
           <ol class="breadcrumb float-sm-right">
-            <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+            <li class="breadcrumb-item"><a [routerLink]="['/main/dashboard']">Home</a></li>
             <li class="breadcrumb-item active">Make Sale</li>
           </ol>
         </div><!-- /.col -->
@@ -67,38 +67,38 @@
                  #instance="ngbTypeahead" [inputFormatter]="formatter" autofocus />
         </div>
 
-        <div class="col-md-4 mb-3">
+        <!-- <div class="col-md-4 mb-3">
           <label for="Discription">Description</label>
           <input type="text" class="form-control" id="Discription" placeholder="" name="discription"
             [formControl]="description" [(ngModel)]="searchedItems.discription" disabled required>
-        </div>
+        </div> -->
 
-        <div class="col-md-1 mb-3">
-          <label for="unicprice">Unit Price</label>
+        <div class="col-md-2 mb-3">
+          <label for="unicprice">Retail($)</label>
           <input type="text" class="form-control" id="unicprice" placeholder="" name="unicPrice"
             [formControl]="unitPrice" [(ngModel)]="searchedItems.unicPrice" disabled required>
         </div>
 
-        <div class="col-md-1 mb-3">
-          <label for="retailprice">Retail Price</label>
+        <div class="col-md-2 mb-3">
+          <label for="retailprice">Wholesale($)</label>
           <input type="text" class="form-control" id="retailprice" placeholder="" name="retailPrice"
             [formControl]="retailPrice" [(ngModel)]="searchedItems.retailPrice" disabled required>
         </div>
 
-        <div class="col-md-1 mb-3">
-          <label for="qtyonhand">Qty Available</label>
+        <div class="col-md-2 mb-3">
+          <label for="qtyonhand">In-stock</label>
           <input #qtyonhand type="number" [formControl]="qtyOHF" class="form-control" id="qtyonhand" placeholder="0"
             name="qtyonhand" [(ngModel)]="searchedItems.qtyOnHand" disabled required>
         </div>
 
-        <div class="col-md-1 mb-3">
+        <div class="col-md-2 mb-3">
             <label for="qty">Qty</label>
             <input #qty type="number" [formControl]="qtyF" class="form-control" id="qty" placeholder="" min="1"
               name="qty" required>
         </div>
 
         <div class="card-body button">
-          <button class="btn btn-primary " (click)="SelectOrderDetails()">Add To Cart</button>
+          <button class="btn btn-primary " (click)="SelectOrderDetails()">Add</button>
         </div>
       </div>
 
@@ -110,10 +110,10 @@
           <tr>
             <th>Product Code</th>
             <th>Description</th>
-            <th>Unit Price</th>
-            <th>Retail Price</th>
+            <th>Retail Price($)</th>
+            <th>Wholesale Price($)</th>
             <th>Qty</th>
-            <th>T/Price</th>
+            <th>Total Price($)</th>
             <th></th>
           </tr>
         </thead>

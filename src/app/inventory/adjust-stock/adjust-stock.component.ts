@@ -12,6 +12,7 @@ import { Adjustment } from 'src/app/core/models/adjustment';
 import { PlaceAdjustmentServiceService } from 'src/app/core/services/place-adjustment.service';
 import { PaymentTypeService } from 'src/app/core/services/payment-type.service';
 import { ItemService } from 'src/app/core/services/item.service';
+import { ConfirmationModalService } from 'src/app/shared/confirmation-modal/confirmation-modal.service';
 
 @Component({
   selector: 'app-adjust-adjustment',
@@ -48,7 +49,12 @@ export class AdjustStockComponent implements OnInit {
   itemzLoading = false;
 
   // tslint:disable-next-line: max-line-length
-  constructor(private placeAdjustmentService: PlaceAdjustmentServiceService, private paymentTypeService: PaymentTypeService , private itemService: ItemService, private route: Router, private elem: ElementRef) { }
+  constructor(private placeAdjustmentService: PlaceAdjustmentServiceService,
+              private paymentTypeService: PaymentTypeService ,
+              private itemService: ItemService,
+              private route: Router,
+              private confirmationModalService: ConfirmationModalService,
+              private elem: ElementRef) { }
 
   ngOnInit() {
     this.getPaymentTypeId();
@@ -130,18 +136,21 @@ inputFormatBandListValue(value: any)   {
     // const adjustmentId = this.elem.nativeElement.querySelector('#adjustmentid').value;
 
     if (this.codeF.value == null) {
-      alert('Oops, search and select a product!');
+      this.confirmationModalService.confirm('Stock Removal', 'Search and select a product!', 'Ok')
+      //alert('Oops, search and select a product!');
       return;
     }
 
     if (qty === '') {
-      alert('Oops, you forgot to enter quantity to be removed!');
+      this.confirmationModalService.confirm('Stock Removal', 'You forgot to enter quantity to be removed!', 'Ok')
+      //alert('Oops, you forgot to enter quantity to be removed!');
       this.qtyField.nativeElement.focus();
       return;
     }
 
     if (this.qtyOHF.value < this.qtyF.value) {
-      alert('Oops, enter quantity that is less than or equal to that in stock!');
+      this.confirmationModalService.confirm('Stock Removal', 'Enter quantity that is less than or equal to that in stock!', 'Ok')
+      //alert('Oops, enter quantity that is less than or equal to that in stock!');
       return;
     }
 
@@ -191,13 +200,14 @@ inputFormatBandListValue(value: any)   {
     this.placeAdjustmentService.placeAdjustment(this.placeAdjustment).subscribe(
       (result) => {
         if (result) {
-          alert('Adjustment has been saved successfully');
-          this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          //this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
-          this.route.navigate(['/main/inventory/place-adjustment']);
+          this.confirmationModalService.confirm('Stock Removal', 'Stock removal has been completed successfully.', 'Ok')
+          //this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.route.navigateByUrl('/main/dashboard', { skipLocationChange: true }).then(() => {
+          this.route.navigate(['/main/inventory/adjust-stock']);
         });
         } else {
-          alert('Failed to save the Adjustment');
+          //alert('Failed to save the Adjustment');
+          this.confirmationModalService.confirm('Stock Removal', 'Stock removal failed.', 'Ok')
         }
       }
     );
@@ -206,12 +216,9 @@ inputFormatBandListValue(value: any)   {
 
  // delete item from order list
  removeItem(i: number, price: number){
-  if (confirm('Are you sure you want to remove this item?')) {
-    console.log(i);
+  console.log(i);
     this.selectedItems.splice(i, 1);
     this.FullTotal = this.FullTotal - price;
-  }
-  return false
 }
 
 }

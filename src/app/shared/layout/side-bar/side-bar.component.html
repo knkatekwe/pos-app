@@ -14,7 +14,7 @@
         <!-- Add icons to the links using the .nav-icon class
              with font-awesome or any other icon font library -->
         <li class="nav-item">
-          <a routerLink="/main/dashboard" routerLinkActive="active" class="nav-link">
+          <a [routerLink]="['/main/dashboard']" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-dashboard"></i>
             <p>
               Dashboard
@@ -23,7 +23,7 @@
         </li>
 
         <li class="nav-item">
-          <a routerLink="/main/place-order" routerLinkActive="active" class="nav-link">
+          <a [routerLink]="['/main/place-order']" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-shopping-cart"></i>
             <p>
               Make Sale
@@ -32,7 +32,7 @@
         </li>
 
         <li class="nav-item">
-          <a routerLink="/main/management/payment-types" routerLinkActive="active" href="#" class="nav-link">
+          <a [routerLink]="['/main/management/payment-types']" routerLinkActive="active" href="#" class="nav-link">
             <i class="nav-icon fa fa-money"></i>
             <p>
               Payment Types
@@ -41,7 +41,7 @@
         </li>
 
         <li class="nav-item" *appUserRole="[ Role.Admin ]">
-          <a routerLink="/main/inventory/products" routerLinkActive="active" class="nav-link">
+          <a [routerLink]="['/main/inventory/products']" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-barcode"></i>
             <p>
               Manage Products
@@ -50,7 +50,7 @@
         </li>
 
         <li class="nav-item" *appUserRole="[ Role.Admin ]">
-          <a routerLink="/main/inventory/place-stock" routerLinkActive="active" class="nav-link">
+          <a [routerLink]="['/main/inventory/place-stock']" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-laptop"></i>
             <p>
               Manage Stock
@@ -59,7 +59,7 @@
         </li>
 
         <li class="nav-item" *appUserRole="[ Role.Admin ]">
-          <a routerLink="/main/inventory/adjust-stock" routerLinkActive="active" class="nav-link">
+          <a [routerLink]="['/main/inventory/adjust-stock']" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-minus-square"></i>
             <p>
               Remove Stock
@@ -68,7 +68,7 @@
         </li>
 
         <li class="nav-item" *appUserRole="[ Role.Admin ]">
-          <a routerLink="/main/management/users" routerLinkActive="active" class="nav-link">
+          <a [routerLink]="['/main/management/users']" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-users"></i>
             <p>
               Manage Users
@@ -77,7 +77,7 @@
         </li>
 
         <li class="nav-item" *appUserRole="[ Role.Admin ]">
-          <a routerLink="/main/management/report/sales" routerLinkActive="active" class="nav-link">
+          <a [routerLink]="['/main/management/report/sales']" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-pie-chart"></i>
             <p>
               View Report
@@ -86,7 +86,7 @@
         </li>
 
         <li class="nav-item">
-          <a (click)="logout()" routerLink="/login" class="nav-link">
+          <a (click)="logout()" [routerLink]="['/login']" class="nav-link">
             <i class="nav-icon fa fa-sign-out"></i>
             <p>
               Logout

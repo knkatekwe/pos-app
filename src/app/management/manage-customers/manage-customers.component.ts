@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { PaymentType } from 'src/app/core/models/payment-type';
 import { PaymentTypeService } from 'src/app/core/services/payment-type.service';
+import { ConfirmationModalService } from 'src/app/shared/confirmation-modal/confirmation-modal.service';
 
 @Component({
   selector: 'app-manage-customers',
@@ -19,7 +20,8 @@ export class ManagePaymentTypesComponent implements OnInit {
   @ViewChild('frmPaymentTypes', {static: false}) frmPaymentTypes: NgForm;
 
 
-  constructor(private paymentTypeService: PaymentTypeService) {
+  constructor(private paymentTypeService: PaymentTypeService,
+              private dialog: ConfirmationModalService) {
   }
 
   ngOnInit() {
@@ -36,18 +38,20 @@ export class ManagePaymentTypesComponent implements OnInit {
   }
 
   deletePaymentType(paymentType: PaymentType): void {
-    if (confirm('Are you sure you want to delete this Payment Type?')) {
-      this.paymentTypeService.deletePaymentType(paymentType.typeName).subscribe(
-        (result) => {
-          if (result) {
-            alert('PaymentType has been deleted successfully');
-          } else {
-            alert('Failed to delete the Payment Type');
-          }
-          this.loadAllPaymentTypes();
-        }
-      );
-    }
+    // if (confirm('Are you sure you want to delete this Payment Type?')) {
+    //   this.paymentTypeService.deletePaymentType(paymentType.typeName).subscribe(
+    //     (result) => {
+    //       if (result) {
+    //         this.dialog.confirm('Payment Types', 'Payment has been deleted successfully.', 'Ok')
+    //         //alert('PaymentType has been deleted successfully');
+    //       } else {
+    //         this.dialog.confirm('Payment Types', 'Failed to delete payment type!.', 'Ok')
+    //         //alert('Failed to delete the Payment Type');
+    //       }
+    //       this.loadAllPaymentTypes();
+    //     }
+    //   );
+    // }
   }
 
   selectPaymentType(paymentType: PaymentType){
@@ -71,11 +75,13 @@ export class ManagePaymentTypesComponent implements OnInit {
     this.paymentTypeService.savePaymentType(this.selectedPaymentType).subscribe(
       (result) => {
         if (result) {
-          alert('Payment Type has been saved successfully');
+          this.dialog.confirm('Payment Types', 'Payment has been saved successfully.', 'Ok')
+          //alert('Payment Type has been saved successfully');
           this.loadAllPaymentTypes();
           this.clear();
         } else {
-          alert('Failed to save the Payment Type');
+          this.dialog.confirm('Payment Types', 'Failed to save payment type!', 'Ok')
+          //alert('Failed to save the Payment Type');
         }
       }
     );

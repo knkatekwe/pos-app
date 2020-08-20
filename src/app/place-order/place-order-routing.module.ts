@@ -11,7 +11,7 @@ const routes: Routes = [
   {
     path: '',
     component: PlaceOrderComponent,
-    canDeactivate: [PlaceOrderComponentCandeactivateGuard]
+    //canDeactivate: [PlaceOrderComponentCandeactivateGuard]
   },
   {
     path: 'receipt',

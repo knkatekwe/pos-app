@@ -12,6 +12,7 @@ import { NgForm, FormControl, FormGroup, FormBuilder } from '@angular/forms';
 import { PlaceStockServiceService } from 'src/app/core/services/place-stock-service.service';
 import { PaymentTypeService } from 'src/app/core/services/payment-type.service';
 import { ItemService } from 'src/app/core/services/item.service';
+import { ConfirmationModalService } from 'src/app/shared/confirmation-modal/confirmation-modal.service';
 
 @Component({
 	selector: 'app-place-stock',
@@ -58,6 +59,7 @@ export class PlaceStockComponent implements OnInit {
 		private placeStockService: PlaceStockServiceService,
 		private paymentTypeService: PaymentTypeService,
     private itemService: ItemService,
+    private confirmationModalService: ConfirmationModalService,
     private formBuilder: FormBuilder,
 		private route: Router,
 		private elem: ElementRef,
@@ -134,18 +136,21 @@ export class PlaceStockComponent implements OnInit {
 		// const stockId = this.elem.nativeElement.querySelector('#stockid').value;
 
 		if (this.codeF.value == null) {
-			alert('Oops, search and select a product!');
+      this.confirmationModalService.confirm('Stock In-take', 'Search and select a product!', 'Ok')
+			//alert('Oops, search and select a product!');
 			return;
 		}
 
 		if (qty === '') {
-			alert('Oops, you forgot to enter stock quantity!');
+      this.confirmationModalService.confirm('Stock In-take', 'Enter enter stock quantity!', 'Ok')
+			//alert('Oops, you forgot to enter stock quantity!');
 			this.qtyField.nativeElement.focus();
 			return;
 		}
 
 		if (this.purchasePriceF.value > this.unitPriceF.value) {
-			alert('Oops, enter a value that is more than the purchase price!');
+      this.confirmationModalService.confirm('Stock In-take', 'Enter a value that is more than the purchase price!', 'Ok')
+			//alert('Oops, enter a value that is more than the purchase price!');
 			return;
 		}
 
@@ -192,26 +197,25 @@ export class PlaceStockComponent implements OnInit {
 
 		this.placeStockService.placeStock(this.placeStock).subscribe((result) => {
 			if (result) {
-				alert('Stock has been saved successfully');
+        this.confirmationModalService.confirm('Stock In-take', 'Stock in-take successfull.', 'Ok')
+				//alert('Stock has been saved successfully');
 				//
-				this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-				//this.route.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
+				//this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+				this.route.navigateByUrl('/main/dashboard', { skipLocationChange: true }).then(() => {
 					this.route.navigate([ '/main/inventory/place-stock' ]);
 				});
 			} else {
-				alert('Failed to save the Stock');
+        this.confirmationModalService.confirm('Stock In-take', 'Stock in-take failed!', 'Ok')
+				//alert('Failed to save the Stock');
 			}
 		});
 	}
 
 	// delete item from order list
 	removeItem(i: number, price: number){
-		if (confirm('Are you sure you want to remove this item?')) {
-			console.log(i);
-			this.selectedItems.splice(i, 1);
-			this.FullTotal = this.FullTotal - price;
-    }
-    return false
+		console.log(i);
+		this.selectedItems.splice(i, 1);
+		this.FullTotal = this.FullTotal - price;
   }
 
 

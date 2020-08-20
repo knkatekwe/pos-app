@@ -16,6 +16,8 @@ import { StockIntakeReceiptComponent } from './receipts/stock-intake-receipt/sto
 import { UserRoleDirective } from './user-role.directive';
 import { ReceiptPrintComponent } from './receipts/receipt-print/receipt-print.component';
 import { RemovalReceiptComponent } from './receipts/removal-receipt/removal-receipt.component';
+import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalService } from './confirmation-modal/confirmation-modal.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { RemovalReceiptComponent } from './receipts/removal-receipt/removal-rece
     ShowAuthedDirective,
     UserRoleDirective,
     ReceiptPrintComponent,
-    RemovalReceiptComponent
+    RemovalReceiptComponent,
+    ConfirmationModalComponent,
   ],
   imports: [
     CommonModule,
@@ -62,7 +65,12 @@ import { RemovalReceiptComponent } from './receipts/removal-receipt/removal-rece
     ShowAuthedDirective,
     UserRoleDirective,
     ReceiptPrintComponent,
-    RemovalReceiptComponent
-  ]
+    RemovalReceiptComponent,
+    ConfirmationModalComponent,
+  ],
+  providers:[
+    ConfirmationModalService
+  ],
+  entryComponents:[ConfirmationModalComponent]
 })
 export class SharedModule { }

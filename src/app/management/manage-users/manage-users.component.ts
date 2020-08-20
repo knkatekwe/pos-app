@@ -2,6 +2,9 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { User } from 'src/app/core/models/user';
 import { UserService } from 'src/app/core/services/user.service';
 import { NgForm, FormBuilder, Validators, FormGroup } from '@angular/forms';
+import { ConfirmationModalComponent } from 'src/app/shared/confirmation-modal/confirmation-modal.component';
+import { ConfirmationModalService } from 'src/app/shared/confirmation-modal/confirmation-modal.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-manage-users',
@@ -23,7 +26,9 @@ export class ManageUsersComponent implements OnInit {
   @ViewChild('frmUser', {static: false}) frmUser: NgForm;
 
   constructor(private userService: UserService,
-              private fb: FormBuilder) { }
+              private fb: FormBuilder,
+              private router: Router,
+              private dialog: ConfirmationModalService) { }
 
   ngOnInit() {
     this.loadAllUser();
@@ -40,7 +45,7 @@ export class ManageUsersComponent implements OnInit {
     );
   }
 
-  selectUser(user: User): void {
+  selectUser(user: User){
     this.clear();
     this.selectedUser = user;
     this.tempUser = Object.assign({}, user);
@@ -72,12 +77,14 @@ export class ManageUsersComponent implements OnInit {
           (result) => {
             if (result) {
               console.log(this.selectedUser);
-              alert('User has been saved successfully');
+              this.dialog.confirm('System users', 'User saved successfully.', 'Ok')
+              //alert('User has been saved successfully');
               this.clear();
               this.form.reset()
               this.loadAllUser();
             } else {
-              alert('Failed to save the User');
+              this.dialog.confirm('System users', 'Failed to save user.', 'Ok')
+              //alert('Failed to save the User');
             }
           }
         );
@@ -86,24 +93,28 @@ export class ManageUsersComponent implements OnInit {
           (result) => {
             if (result) {
               console.log(this.selectedUser);
-              alert('User has been updated successfully');
-              this.clear();
+              //alert('User has been updated successfully');
+              this.dialog.confirm('System users', 'User updated successfully.', 'Ok')
+              this.clear()
               this.form.reset()
-              this.loadAllUser();
+              this.loadAllUser()
+              this.router.navigateByUrl('/login')
             } else {
-              alert('Failed to updated the user');
+              this.dialog.confirm('System users', 'User failed to update!', 'Ok')
+              //alert('Failed to updated the user');
             }
           }
         );
       }
     }else{
-      alert('Passwords should match...!')
+      this.dialog.confirm('System users', 'Passwords should match...', 'Ok')
+      //alert('Passwords should match...!')
     }
 
   }
 
   deletUser(userID: User){
-    if (confirm('Are you sure you want to delete this customer?')) {
+    if (this.dialog.confirm('System users', 'Are you sure you want to delete user?', 'Ok')) {
       // this.userService.deletePaymentType(userID.id).subscribe(
       //   (result) => {
       //     if (result) {

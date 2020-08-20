@@ -7,7 +7,7 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/main/dashboard']">Home</a></li>
           <li class="breadcrumb-item active">Sales History</li>
         </ol>
       </div><!-- /.col -->
@@ -23,7 +23,7 @@
         <th>Date</th>
         <th>Payment</th>
         <th>Sale</th>
-        <th>Total Price</th>
+        <th>Total($)</th>
         <th></th>
       </tr>
     </thead>
@@ -64,26 +64,6 @@
       <div class="modal-body">
         <div class="col-md-12 col-12">
           <app-purchase-receipt [order]="orderz"></app-purchase-receipt>
-          <!-- <table id="tblSaleDetails" class="table table-bordered table-hover">
-            <thead>
-              <tr>
-                <th>Code</th>
-                <th>Description</th>
-                <th>Qty</th>
-                <th>U/Price</th>
-                <th>T/Price</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr *ngFor="let order of orderDetails">
-                <td>{{order.item.code}}</td>
-                <td>{{order.item.discription}}</td>
-                <td>{{order.quantity}}</td>
-                <td>{{order.unitprice | currency: 'USD'}}</td>
-                <td>{{order.unitprice * order.quantity  | currency: 'USD'}}</td>
-              </tr>
-            </tbody>
-          </table> -->
         </div>
       </div>
       <div class="modal-footer">

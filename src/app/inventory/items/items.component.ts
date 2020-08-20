@@ -2,6 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import { Items } from 'src/app/core/models/items';
 import { ItemService } from 'src/app/core/services/item.service';
+import { ConfirmationModalService } from 'src/app/shared/confirmation-modal/confirmation-modal.service';
 
 @Component({
   selector: 'app-items',
@@ -20,7 +21,7 @@ export class ItemsComponent implements OnInit {
   // @ViewChild('frmItems') frmItems: NgForm;
   @ViewChild('frmItems', {static: false}) frmItems: NgForm;
 
-  constructor(private itemService: ItemService) { }
+  constructor(private itemService: ItemService, private confirmationModalService: ConfirmationModalService) { }
 
   ngOnInit() {
     this.loadAllItems();
@@ -36,7 +37,7 @@ export class ItemsComponent implements OnInit {
     );
   }
 
-  selectItems(item: Items): void {
+  selectItems(item: Items){
     this.clear();
     this.selectedItems = item;
     this.tempItems = Object.assign({}, item);
@@ -60,11 +61,13 @@ export class ItemsComponent implements OnInit {
       (result) => {
         if (result) {
           console.log(this.selectedItems);
-          alert('Product has been saved successfully');
+          this.confirmationModalService.confirm('Product', 'Product has been saved successfully.', 'Ok')
+          //alert('Product has been saved successfully');
           this.clear();
           this.loadAllItems();
         } else {
-          alert('Failed to save the product');
+          this.confirmationModalService.confirm('Product', 'Failed to save the product!', 'Ok', 'Cancel')
+          //alert('Failed to save the product');
         }
       }
     );
@@ -76,9 +79,10 @@ export class ItemsComponent implements OnInit {
       this.itemService.deletePaymentType(itemsID.code).subscribe(
         (result) => {
           if (result) {
-            alert('Product has been Deleted successfully');
+            this.confirmationModalService.confirm('Product', 'Product has been deleted successfully.', 'Ok')
+            //alert('Product has been Deleted successfully');
           } else {
-            alert('Failed to deleted product');
+            this.confirmationModalService.confirm('Product', 'Failed to delete product!', 'Ok', 'Cancel')
           }
           this.loadAllItems();
         }

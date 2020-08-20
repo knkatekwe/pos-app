@@ -7,7 +7,7 @@
       </div><!-- /.col -->
       <div class="col-sm-6">
         <ol class="breadcrumb float-sm-right">
-          <li class="breadcrumb-item"><a [routerLink]="['/']">Home</a></li>
+          <li class="breadcrumb-item"><a [routerLink]="['/main/dashboard']">Home</a></li>
           <li class="breadcrumb-item active">Dashboard</li>
         </ol>
       </div>
@@ -31,7 +31,7 @@
           <div class="icon">
             <i class="fa fa-barcode"></i>
           </div>
-          <a routerLink="/main/manage-products" class="small-box-footer">More info <i
+          <a [routerLink]="['.']" class="small-box-footer">More info <i
               class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>
@@ -47,7 +47,7 @@
           <div class="icon">
             <i class="fa fa-shopping-cart"></i>
           </div>
-          <a routerLink="/main/view-report" class="small-box-footer">More info <i
+          <a [routerLink]="['.']" class="small-box-footer">More info <i
               class="fa fa-arrow-circle-right"></i></a>
         </div>
       </div>

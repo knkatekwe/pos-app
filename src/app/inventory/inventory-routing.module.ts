@@ -16,7 +16,7 @@ const routes: Routes = [
       {
         path: 'adjust-stock',
         component: AdjustStockComponent,
-        canDeactivate: [AdjustStockComponentCandeactivateGuard]
+        //canDeactivate: [AdjustStockComponentCandeactivateGuard]
       },
       {
         path: 'products',
@@ -26,7 +26,7 @@ const routes: Routes = [
       {
         path: 'place-stock',
         component: PlaceStockComponent,
-        canDeactivate: [PlaceStockComponentCandeactivateGuard]
+        //canDeactivate: [PlaceStockComponentCandeactivateGuard]
       },
     ]
   }
