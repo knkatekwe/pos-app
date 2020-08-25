@@ -60,7 +60,6 @@ export class PlaceStockComponent implements OnInit {
 		private paymentTypeService: PaymentTypeService,
     private itemService: ItemService,
     private confirmationModalService: ConfirmationModalService,
-    private formBuilder: FormBuilder,
 		private route: Router,
 		private elem: ElementRef,
 	) {}
@@ -212,11 +211,10 @@ export class PlaceStockComponent implements OnInit {
 	}
 
 	// delete item from order list
-	removeItem(i: number, price: number){
-		console.log(i);
+	removeItem(i: number, amount: number){
+		//console.log(i);
 		this.selectedItems.splice(i, 1);
-		this.FullTotal = this.FullTotal - price;
+		this.FullTotal = this.FullTotal - amount;
   }
-
 
 }

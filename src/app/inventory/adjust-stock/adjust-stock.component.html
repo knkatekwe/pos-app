@@ -29,7 +29,6 @@
         </select>
       </div>
 
-
       <div class="col-md-3 mb-3">
         <label for="paymentTypeName">Rate</label>
         <input type="text" class="form-control" id="paymentTypeName" placeholder="" name="rate"
@@ -137,7 +136,7 @@
           <td>{{SelectItem.quantity}}</td>
           <td>{{SelectItem.quantity * SelectItem.purchasePrice  | currency: 'USD'}}</td>
           <td>
-            <button (click)="removeItem(i, SelectItem.quantity * SelectItem.unitprice)"
+            <button (click)="removeItem(i, (SelectItem.quantity * SelectItem.purchasePrice))"
                 class="btn btn-sm btn-outline-danger">Remove</button>
           </td>
         </tr>

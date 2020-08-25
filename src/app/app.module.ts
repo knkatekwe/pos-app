@@ -12,7 +12,6 @@ import { PlaceOrderModule } from './place-order/place-order.module';
 import { CoreModule } from './core/core.module';
 import { MainModule } from './main/main.module';
 import {NgxPrintModule} from 'ngx-print';
-import { Vex } from 'vex-js'
 
 @NgModule({
   declarations: [

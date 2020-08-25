@@ -15,210 +15,208 @@ import { ItemService } from 'src/app/core/services/item.service';
 import { ConfirmationModalService } from 'src/app/shared/confirmation-modal/confirmation-modal.service';
 
 @Component({
-  selector: 'app-adjust-adjustment',
-  templateUrl: './adjust-stock.component.html',
+	selector: 'app-adjust-adjustment',
+	templateUrl: './adjust-stock.component.html'
 })
 export class AdjustStockComponent implements OnInit {
+	model: Items = new Items();
+	paymentTypes: Array<PaymentType> = [];
+	selectedItems: Array<AdjustmentDetail> = [];
+	FullTotal = 0;
+	searchedItems: Items = new Items();
+	searchedPaymentTypes: PaymentType = new PaymentType();
+	adjustmentDetail_PKDto: AdjustmentDetailPK;
+	adjustmentDetail: AdjustmentDetail;
+	items: any = [];
+	placeAdjustment: PlaceAdjustment;
+	adjustment: Adjustment;
+	Total = 0;
+	// @ViewChild('frmItems') frmItems: NgForm;
+	@ViewChild('frmItems', { static: false })
+	frmItems: NgForm;
+	@ViewChild('code', { static: false })
+	nameField: ElementRef;
+	@ViewChild('qty', { static: false })
+	qtyField: ElementRef;
 
-  model: Items = new Items();
-  paymentTypes: Array<PaymentType> = [];
-  selectedItems: Array<AdjustmentDetail> = [];
-  FullTotal = 0;
-  searchedItems: Items = new Items();
-  searchedPaymentTypes: PaymentType = new PaymentType();
-  adjustmentDetail_PKDto: AdjustmentDetailPK;
-  adjustmentDetail: AdjustmentDetail;
-  items: any = [];
-  placeAdjustment: PlaceAdjustment;
-  adjustment: Adjustment;
-  Total = 0;
-  // @ViewChild('frmItems') frmItems: NgForm;
-  @ViewChild('frmItems', {static: false}) frmItems: NgForm;
-  @ViewChild('code', {static: false}) nameField: ElementRef;
-  @ViewChild('qty', {static: false}) qtyField: ElementRef;
+	itemz: Observable<Items[] | Observable<Items[]>>;
+	itemCode = new FormControl();
+	codeF = new FormControl();
+	description = new FormControl();
+	unitPrice = new FormControl();
+	retailPrice = new FormControl();
+	purchasePrice = new FormControl();
+	qtyF = new FormControl();
+	qtyOHF = new FormControl();
+	itemzLoading = false;
 
-  itemz: Observable<Items[] | Observable<Items[]>>;
-  itemCode = new FormControl();
-  codeF = new FormControl();
-  description = new FormControl();
-  unitPrice = new FormControl();
-  retailPrice = new FormControl();
-  purchasePrice = new FormControl();
-  qtyF = new FormControl();
-  qtyOHF = new FormControl();
-  itemzLoading = false;
+	// tslint:disable-next-line: max-line-length
+	constructor(
+		private placeAdjustmentService: PlaceAdjustmentServiceService,
+		private paymentTypeService: PaymentTypeService,
+		private itemService: ItemService,
+		private route: Router,
+		private confirmationModalService: ConfirmationModalService,
+		private elem: ElementRef
+	) {}
 
-  // tslint:disable-next-line: max-line-length
-  constructor(private placeAdjustmentService: PlaceAdjustmentServiceService,
-              private paymentTypeService: PaymentTypeService ,
-              private itemService: ItemService,
-              private route: Router,
-              private confirmationModalService: ConfirmationModalService,
-              private elem: ElementRef) { }
+	ngOnInit() {
+		this.getPaymentTypeId();
+		this.getItemCode();
 
-  ngOnInit() {
-    this.getPaymentTypeId();
-    this.getItemCode();
+		this.itemz = this.itemCode.valueChanges.pipe(
+			debounceTime(400),
+			distinctUntilChanged(),
+			tap(() => (this.itemzLoading = true)),
+			switchMap((code) => this.itemService.findProductByCode(code)),
+			tap(() => (this.itemzLoading = false))
+		);
+	}
 
-    this.itemz = this.itemCode.valueChanges.pipe(
-      debounceTime( 400 ),
-      distinctUntilChanged(),
-      tap(() => this.itemzLoading = true ),
-      switchMap( code => this.itemService.findProductByCode( code ) ),
-      tap(() => this.itemzLoading = false ) );
-  }
+	search = (text$: Observable<string>) => {
+		return text$.pipe(
+			debounceTime(400),
+			distinctUntilChanged(),
+			tap(() => (this.itemzLoading = true)),
+			// switchMap allows returning an observable rather than maps array
+			switchMap((code) => this.itemService.findProductByCode(code)),
+			tap(() => (this.itemzLoading = false))
+		);
+		// catchError(new ErrorInfo().parseObservableResponseError)
+	};
 
-  search = (text$: Observable<string>) => {
-    return text$.pipe(
-      debounceTime( 400 ),
-      distinctUntilChanged(),
-      tap(() => this.itemzLoading = true ),
-        // switchMap allows returning an observable rather than maps array
-      switchMap( code => this.itemService.findProductByCode( code ) ),
-      tap(() => this.itemzLoading = false ) );
-        // catchError(new ErrorInfo().parseObservableResponseError)
-  }
+	formatter = (x: { code: string }) => x.code;
 
-  formatter = (x: {code: string}) => x.code;
+	//  Used to format the result data from the lookup into the
+	//  display and list values. Maps `{name: "band", id:"id" }` into a string
 
-//  Used to format the result data from the lookup into the
-//  display and list values. Maps `{name: "band", id:"id" }` into a string
+	resultFormatBandListValue(value: any) {
+		return value.code;
+	}
 
-resultFormatBandListValue(value: any) {
-  return value.code;
-}
+	// Initially binds the string value and then after selecting
+	// an item by checking either for string or key/value object.
 
-// Initially binds the string value and then after selecting
-// an item by checking either for string or key/value object.
+	inputFormatBandListValue(value: any) {
+		if (value.code) {
+			return value.code;
+		}
+		return value;
+	}
 
-inputFormatBandListValue(value: any)   {
-  if (value.code) {
-    return value.code;
-  }
-  return value;
-}
+	getPaymentTypeId() {
+		this.paymentTypeService.getAllPaymentTypes().subscribe((result) => {
+			this.paymentTypes = result;
+			console.log(this.paymentTypes);
+		});
+	}
 
-  getPaymentTypeId(){
-    this.paymentTypeService.getAllPaymentTypes().subscribe(
-      (result) => {
-        this.paymentTypes = result;
-        console.log(this.paymentTypes);
-      }
-    );
+	searchItems(event: any) {
+		this.itemService.searchItem(event.target.value).subscribe((result) => {
+			this.searchedItems = result;
+			console.log(this.searchedItems);
+		});
+	}
 
-  }
+	getItemCode() {
+		this.itemService.getAllItems().subscribe((result) => {
+			this.items = result;
+		});
+	}
 
+	SelectAdjustmentDetails() {
+		const total = this.elem.nativeElement.querySelector('#total').value;
+		const qty = this.elem.nativeElement.querySelector('#qty').value;
+		const purchasePrice = this.elem.nativeElement.querySelector('#purchasePrice').value;
 
-  searchItems(event: any){
-    this.itemService.searchItem(event.target.value).subscribe(
-      (result) => {
-        this.searchedItems = result;
-        console.log(this.searchedItems);
-      }
-    );
+		// const adjustmentId = this.elem.nativeElement.querySelector('#adjustmentid').value;
 
-  }
+		if (this.codeF.value == null) {
+			this.confirmationModalService.confirm('Stock Removal', 'Search and select a product!', 'Ok');
+			//alert('Oops, search and select a product!');
+			return;
+		}
 
-  getItemCode() {
-    this.itemService.getAllItems().subscribe(
-      (result) => {
-        this.items = result;
-      }
-    );
-  }
+		if (qty === '') {
+			this.confirmationModalService.confirm('Stock Removal', 'You forgot to enter quantity to be removed!', 'Ok');
+			//alert('Oops, you forgot to enter quantity to be removed!');
+			this.qtyField.nativeElement.focus();
+			return;
+		}
 
-  SelectAdjustmentDetails(){
+		if (this.qtyOHF.value < this.qtyF.value) {
+			this.confirmationModalService.confirm(
+				'Stock Removal',
+				'Enter quantity that is less than or equal to that in stock!',
+				'Ok'
+			);
+			//alert('Oops, enter quantity that is less than or equal to that in stock!');
+			return;
+		}
 
-    const total = this.elem.nativeElement.querySelector('#total').value;
-    const qty = this.elem.nativeElement.querySelector('#qty').value;
-    const purchasePrice = this.elem.nativeElement.querySelector('#purchasePrice').value;
+		this.Total = qty * this.searchedItems.purchasePrice;
+		this.FullTotal = this.FullTotal + this.Total;
+		const price = this.FullTotal;
+		console.log(price);
 
-    // const adjustmentId = this.elem.nativeElement.querySelector('#adjustmentid').value;
+		this.adjustment = new Adjustment(this.FullTotal);
+		console.log(this.adjustment.totalPrice);
+		this.adjustmentDetail_PKDto = new AdjustmentDetailPK();
+		this.adjustmentDetail = new AdjustmentDetail();
+		this.adjustmentDetail.quantity = qty;
+		this.adjustmentDetail.purchasePrice = purchasePrice;
+		this.adjustmentDetail.unitprice = this.searchedItems.unicPrice;
+		this.adjustmentDetail.retailprice = this.searchedItems.retailPrice;
+		this.adjustmentDetail.item = this.searchedItems;
+		this.adjustmentDetail.adjustment = this.adjustment;
+		this.adjustmentDetail.adjustmentDetail_PKDto = this.adjustmentDetail_PKDto;
 
-    if (this.codeF.value == null) {
-      this.confirmationModalService.confirm('Stock Removal', 'Search and select a product!', 'Ok')
-      //alert('Oops, search and select a product!');
-      return;
-    }
+		this.selectedItems.push(this.adjustmentDetail);
 
-    if (qty === '') {
-      this.confirmationModalService.confirm('Stock Removal', 'You forgot to enter quantity to be removed!', 'Ok')
-      //alert('Oops, you forgot to enter quantity to be removed!');
-      this.qtyField.nativeElement.focus();
-      return;
-    }
+		console.log(this.selectedItems);
+		this.qtyF.reset();
+		// this.qtyOHF.reset();
+		this.codeF.reset();
+		// this.description.reset();
+		// this.unitPrice.reset();
+		// this.purchasePrice.reset();
+		this.nameField.nativeElement.focus();
+	}
 
-    if (this.qtyOHF.value < this.qtyF.value) {
-      this.confirmationModalService.confirm('Stock Removal', 'Enter quantity that is less than or equal to that in stock!', 'Ok')
-      //alert('Oops, enter quantity that is less than or equal to that in stock!');
-      return;
-    }
+	searchPaymentType(event: any) {
+		this.paymentTypeService.searchPaymentType(event.target.value).subscribe((result) => {
+			this.searchedPaymentTypes = result;
+			console.log(this.searchedItems);
+		});
+	}
+	addAdjustment() {
+		this.placeAdjustment = new PlaceAdjustment();
+		this.placeAdjustment.itemsDTO = this.searchedItems;
+		this.placeAdjustment.adjustmentDTO = this.adjustment;
+		this.placeAdjustment.adjustmentDetailDTOS = this.selectedItems;
 
-    this.Total = qty * this.searchedItems.purchasePrice;
-    this.FullTotal = this.FullTotal + this.Total;
-    const price = this.FullTotal;
-    console.log(price);
+		this.placeAdjustmentService.placeAdjustment(this.placeAdjustment).subscribe((result) => {
+			if (result) {
+				this.confirmationModalService.confirm(
+					'Stock Removal',
+					'Stock removal has been completed successfully.',
+					'Ok'
+				);
+				//this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+				this.route.navigateByUrl('/main/dashboard', { skipLocationChange: true }).then(() => {
+					this.route.navigate([ '/main/inventory/adjust-stock' ]);
+				});
+			} else {
+				//alert('Failed to save the Adjustment');
+				this.confirmationModalService.confirm('Stock Removal', 'Stock removal failed.', 'Ok');
+			}
+		});
+	}
 
-    this.adjustment = new Adjustment(this.FullTotal);
-    console.log(this.adjustment.totalPrice);
-    this.adjustmentDetail_PKDto = new AdjustmentDetailPK();
-    this.adjustmentDetail = new AdjustmentDetail();
-    this.adjustmentDetail.quantity = qty;
-    this.adjustmentDetail.purchasePrice = purchasePrice;
-    this.adjustmentDetail.unitprice = this.searchedItems.unicPrice;
-    this.adjustmentDetail.retailprice = this.searchedItems.retailPrice;
-    this.adjustmentDetail.item = this.searchedItems;
-    this.adjustmentDetail.adjustment = this.adjustment;
-    this.adjustmentDetail.adjustmentDetail_PKDto = this.adjustmentDetail_PKDto;
-
-    this.selectedItems.push(this.adjustmentDetail);
-
-    console.log(this.selectedItems);
-    this.qtyF.reset();
-    // this.qtyOHF.reset();
-    this.codeF.reset();
-    // this.description.reset();
-    // this.unitPrice.reset();
-    // this.purchasePrice.reset();
-    this.nameField.nativeElement.focus();
-  }
-
-  searchPaymentType(event: any){
-    this.paymentTypeService.searchPaymentType(event.target.value).subscribe(
-      (result) => {
-        this.searchedPaymentTypes = result;
-        console.log(this.searchedItems);
-      }
-    );
-  }
-  addAdjustment(){
-    this.placeAdjustment = new PlaceAdjustment();
-    this.placeAdjustment.itemsDTO = this.searchedItems;
-    this.placeAdjustment.adjustmentDTO = this.adjustment;
-    this.placeAdjustment.adjustmentDetailDTOS = this.selectedItems;
-
-    this.placeAdjustmentService.placeAdjustment(this.placeAdjustment).subscribe(
-      (result) => {
-        if (result) {
-          this.confirmationModalService.confirm('Stock Removal', 'Stock removal has been completed successfully.', 'Ok')
-          //this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.route.navigateByUrl('/main/dashboard', { skipLocationChange: true }).then(() => {
-          this.route.navigate(['/main/inventory/adjust-stock']);
-        });
-        } else {
-          //alert('Failed to save the Adjustment');
-          this.confirmationModalService.confirm('Stock Removal', 'Stock removal failed.', 'Ok')
-        }
-      }
-    );
-
-  }
-
- // delete item from order list
- removeItem(i: number, price: number){
-  console.log(i);
-    this.selectedItems.splice(i, 1);
-    this.FullTotal = this.FullTotal - price;
-}
-
+	// delete item from order list
+	removeItem(i: number, amount: number) {
+		console.log(i);
+		this.selectedItems.splice(i, 1);
+		this.FullTotal = this.FullTotal - amount;
+	}
 }

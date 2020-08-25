@@ -27,11 +27,10 @@ export class ItemsComponent implements OnInit {
     this.loadAllItems();
   }
 
-  loadAllItems(): void {
+  loadAllItems(){
     this.itemService.getAllItems().subscribe(
       (result) => {
         this.items = result;
-
         console.log(this.items);
       }
     );
@@ -44,7 +43,7 @@ export class ItemsComponent implements OnInit {
     this.manuallySelected = true;
   }
 
-  clear(): void {
+  clear(){
     const index = this.items.indexOf(this.selectedItems);
 
     if (index !== -1) {
@@ -56,7 +55,7 @@ export class ItemsComponent implements OnInit {
     this.manuallySelected = false;
   }
 
-  saveItems(): void {
+  saveItems(){
     this.itemService.saveItems(this.selectedItems).subscribe(
       (result) => {
         if (result) {

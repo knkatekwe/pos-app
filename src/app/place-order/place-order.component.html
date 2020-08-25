@@ -126,7 +126,7 @@
             <td>{{SelectItem.quantity}}</td>
             <td>{{SelectItem.quantity * SelectItem.unitprice  | currency: 'USD'}}</td>
             <td>
-              <button (click)="removeItem(i, SelectItem.quantity * SelectItem.unitprice)"
+              <button (click)="removeItem(i, (SelectItem.quantity * SelectItem.unitprice))"
                 class="btn btn-sm btn-outline-danger">Remove</button>
             </td>
           </tr>
