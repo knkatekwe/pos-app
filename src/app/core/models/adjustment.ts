@@ -6,6 +6,7 @@ export class Adjustment {
   date: Date;
   totalPrice: number;
   user: User;
+  adjustmentDetails: any
   // paymentType: PaymentType;
 
 

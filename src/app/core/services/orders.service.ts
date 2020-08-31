@@ -18,6 +18,16 @@ export class OrderService {
 
   }
 
+  getAllOrdersToday(): Observable<Array<Orders>> {
+    return this.http.get<Array<Orders>>(API_ENDPOINT + '/orders/today');
+
+  }
+
+  getAllOrdersByDates(startDate: string, endDate: string): Observable<Array<Orders>> {
+    return this.http.get<Array<Orders>>(API_ENDPOINT + '/orders/dates/' + startDate + '/' + endDate);
+
+  }
+
   getAllOrderDetails(oId: number): Observable<Orders> {
     return this.http.get<Orders>(API_ENDPOINT + '/orders/' + oId);
 
@@ -27,7 +37,6 @@ export class OrderService {
     return this.http.get<Orders>(API_ENDPOINT + '/orders/last');
 
   }
-
 
   getTotalOrders(): Observable<number> {
     return this.http.get<number>(API_ENDPOINT + '/orders/count');

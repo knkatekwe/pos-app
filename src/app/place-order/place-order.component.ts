@@ -169,15 +169,15 @@ export class PlaceOrderComponent implements OnInit {
 			return;
 		}
 
-		if (this.qtyOHF.value < this.qtyF.value) {
-			this.confirmationModalService.confirm(
-				'Sale',
-				'Enter quantity that is less than or equal to that in stock!',
-				'Ok'
-			);
-			//alert('Oops, enter quantity that is less than or equal to that in stock!');
-			return;
-		}
+		// if (this.qtyOHF.value < this.qtyF.value) {
+		// 	this.confirmationModalService.confirm(
+		// 		'Sale',
+		// 		'Enter quantity that is less than or equal to that in stock!',
+		// 		'Ok'
+		// 	);
+		// 	//alert('Oops, enter quantity that is less than or equal to that in stock!');
+		// 	return;
+		// }
 
 		if (this.saleType.value === 'RETAIL') {
 			console.log('this sale is:' + this.saleType.value);

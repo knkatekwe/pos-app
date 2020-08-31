@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdjustmentService } from 'src/app/core/services/adjustment.service';
 import { Adjustment } from 'src/app/core/models/adjustment';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-removed',
@@ -9,36 +10,32 @@ import { Adjustment } from 'src/app/core/models/adjustment';
 })
 export class RemovedComponent implements OnInit {
 
+  form: FormGroup;
+  searchText: any;
+  p: any;
   adjustment: Array<Adjustment> = [];
   adjustmentDetail: Adjustment;
-  // Must be declared as "any", not as "DataTables.Settings"
-  dtOptions: any = {};
 
-  @ViewChild('tblAdjustment', {static: false}) table: any;
-  dataTable: any;
 
-  constructor(private adjustmentService: AdjustmentService) { }
+  constructor(private adjustmentService: AdjustmentService,  private fb: FormBuilder) { }
 
   ngOnInit() {
-    this.loadAllAdjustment();
-
-    this.dtOptions = {
-      // select: true,
-      // Declare the use of the extension in the dom parameter
-      dom: 'Bfrtip',
-      // Configure the buttons
-      buttons: [
-        'print',
-        'excel',
-      ]
-    };
-
-    this.dataTable = $(this.table.nativeElement);
-    this.dataTable.DataTable();
+    this.loadAllAdjustmentsToday();
+    this.initForm()
   }
 
-  loadAllAdjustment(){
-    this.adjustmentService.getAllAdjustment().subscribe(
+  loadAllAdjustmentsToday(){
+    this.adjustmentService.getAllAdjustmentsToday().subscribe(
+      (result) => {
+        this.adjustment = result;
+        console.log(this.adjustment);
+
+      }
+    );
+  }
+
+  loadAllAdjustments(){
+    this.adjustmentService.getAllAdjustments().subscribe(
       (result) => {
         this.adjustment = result;
         console.log(this.adjustment);
@@ -57,5 +54,20 @@ export class RemovedComponent implements OnInit {
     );
 
   }
+
+  search(query){
+    console.log(query)
+    this.adjustmentService.getAllOrdersByDates(query.startDate, query.endDate).subscribe((result) => {
+			this.adjustment = result;
+			console.log(this.adjustment);
+		});
+  }
+
+	initForm() {
+		this.form = this.fb.group({
+      startDate: ['', Validators.required],
+      endDate: ['', Validators.required]
+    });
+	}
 
 }

@@ -1,7 +1,7 @@
 <!-- Content Header (Page header) -->
 <div class="content-header">
   <div class="container-fluid">
-    <div class="row mb-2">
+    <div class="row mb-1">
       <div class="col-sm-6">
         <h1 class="m-0 text-dark">Sales History</h1>
       </div><!-- /.col -->
@@ -14,9 +14,39 @@
     </div><!-- /.row -->
   </div><!-- /.container-fluid -->
 </div>
+<div class="row">
+  <div class="col-md-10">
+    <form [formGroup]="form" (submit)="search(form.value)" novalidate>
+
+      <div class="row">
+        <div class="col-md-3 mb-3">
+          <label for="startDate">Start Date</label>
+          <input type="date" class="form-control" id="startDate" formControlName="startDate"/>
+        </div>
+
+        <div class="col-md-3 mb-3">
+          <label for="endDate">End Date</label>
+          <input type="date" class="form-control" id="endDate" formControlName="endDate"/>
+        </div>
+
+        <div class="col-md-2 mt-4">
+          <button [disabled]="form.invalid" type="submit" class="btn btn-primary">Search</button>
+        </div>
+      </div>
+
+    </form>
+  </div>
+  <div class="col-md-2 mt-4">
+    <button type="button" class="btn btn-primary" (click)="loadAllOrders()">Retrieve All</button>
+  </div>
+</div>
 <!-- /.content-header -->
 <div class="col-md-12 col-12">
-  <table datatable #tblSales [dtOptions]="dtOptions" id="tblSales" class="table table-bordered table-hover">
+  <div class="form-group has-search">
+    <span class="fa fa-search form-control-feedback"></span><input class="form-control" type="text" name="search"
+      [(ngModel)]="searchText" autocomplete="off" placeholder="  Search here...">
+  </div>
+  <table id="tblSales" class="table table-bordered table-hover">
     <thead>
       <tr>
         <th>Attendent</th>
@@ -28,9 +58,9 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let order of orders">
+      <tr *ngFor="let order of orders | filter:searchText | paginate: { itemsPerPage: 6, currentPage: p }">
         <td>{{order.user.username}}</td>
-        <td>{{order.date}}</td>
+        <td>{{order.date | date: 'fullDate'}}</td>
         <td>{{order.paymentType.typeName}}</td>
         <td>{{order.saleType}}</td>
         <td>{{order.totalPrice | currency: 'USD'}}</td>
@@ -40,13 +70,13 @@
         </td>
       </tr>
     </tbody>
-    <!-- <tfoot>
-            <tr>
-              <td colspan="5">
-                <pagination-controls (pageChange)="p = $event"></pagination-controls>
-              </td>
-            </tr>
-            </tfoot> -->
+    <tfoot>
+      <tr>
+        <td colspan="5">
+          <pagination-controls (pageChange)="p = $event"></pagination-controls>
+        </td>
+      </tr>
+    </tfoot>
   </table>
 </div>
 

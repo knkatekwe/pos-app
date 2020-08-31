@@ -18,6 +18,16 @@ export class StockService {
 
   }
 
+  getAllStockToday(): Observable<Array<Stock>> {
+    return this.http.get<Array<Stock>>(API_ENDPOINT + '/stock/today');
+
+  }
+
+  getAllStockByDates(startDate: string, endDate: string): Observable<Array<Stock>> {
+    return this.http.get<Array<Stock>>(API_ENDPOINT + '/orders/dates/' + startDate + '/' + endDate);
+
+  }
+
   getStock(sId: number): Observable<Stock> {
     return this.http.get<Stock>(API_ENDPOINT + '/stock/' + sId);
 

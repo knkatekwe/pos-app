@@ -18,6 +18,7 @@ export class ItemsComponent implements OnInit {
   manuallySelected = false;
 
   searchText: any;
+  p: any;
   // @ViewChild('frmItems') frmItems: NgForm;
   @ViewChild('frmItems', {static: false}) frmItems: NgForm;
 

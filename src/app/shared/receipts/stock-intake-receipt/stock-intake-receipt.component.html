@@ -2,14 +2,14 @@
   <div class="card">
     <div class="card-header p-4">
       <div class="float-right">
-        <h3 class="mb-0">Stock Intake #{{stock.sId}}</h3>
-        {{stock.date}}
+        <h3 class="mb-0">Stock Intake #{{stock?.sId}}</h3>
+        {{stock?.date}}
       </div>
     </div>
     <div class="card-body">
       <div class="row mb-4">
         <div class="col-sm-6">
-          <h5 class="mb-3">Attendent: {{stock.user.username}}</h5>
+          <h5 class="mb-3">Attendent: {{stock?.user?.username}}</h5>
           <!-- <h3 class="text-dark mb-1"></h3> -->
         </div>
         <div class="col-sm-6 ">
@@ -35,16 +35,16 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of stock.stockDetails">
-              <td class="center">{{item.item.code}}</td>
-              <td class="left strong">{{item.item.discription}}</td>
-              <td class="right">{{item.quantity}}</td>
-              <td class="center">{{item.purchasePrice | currency: 'USD'}}</td>
-              <td class="left">{{item.unitprice  | currency: 'USD'}}</td>
+            <tr *ngFor="let item of stock?.stockDetails">
+              <td class="center">{{item.item?.code}}</td>
+              <td class="left strong">{{item.item?.discription}}</td>
+              <td class="right">{{item?.quantity}}</td>
+              <td class="center">{{item?.purchasePrice | currency: 'USD'}}</td>
+              <td class="left">{{item?.unitprice  | currency: 'USD'}}</td>
 
               <td class="left">
-                {{item.retailprice  | currency: 'USD'}}</td>
-              <td class="right">{{item.purchasePrice * item.quantity  | currency: 'USD'}}</td>
+                {{item?.retailprice  | currency: 'USD'}}</td>
+              <td class="right">{{item?.purchasePrice * item?.quantity  | currency: 'USD'}}</td>
             </tr>
 
           </tbody>
@@ -60,7 +60,7 @@
                 <td class="left">
                   <strong class="text-dark">Total</strong> </td>
                 <td class="right">
-                  <strong class="text-dark">{{stock.totalPrice  | currency: 'USD'}}</strong>
+                  <strong class="text-dark">{{stock?.totalPrice  | currency: 'USD'}}</strong>
                 </td>
               </tr>
             </tbody>

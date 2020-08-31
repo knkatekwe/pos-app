@@ -12,8 +12,17 @@ export class AdjustmentService {
 
   constructor(private http: HttpClient) {}
 
-  getAllAdjustment(): Observable<Array<Adjustment>> {
+  getAllAdjustments(): Observable<Array<Adjustment>> {
     return this.http.get<Array<Adjustment>>(API_ENDPOINT + '/adjustment');
+  }
+
+  getAllAdjustmentsToday(): Observable<Array<Adjustment>> {
+    return this.http.get<Array<Adjustment>>(API_ENDPOINT + '/adjustment/today');
+  }
+
+  getAllOrdersByDates(startDate: string, endDate: string): Observable<Array<Adjustment>> {
+    return this.http.get<Array<Adjustment>>(API_ENDPOINT + '/orders/dates/' + startDate + '/' + endDate);
+
   }
 
   getAdjustment(sId: number): Observable<Adjustment> {
