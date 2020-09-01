@@ -16,6 +16,7 @@ export class ManageUsersComponent implements OnInit {
   user: Array<User> = [];
   selectedUser: User = new User;
   tempUser: User = null;
+  p:any;
   manuallySelected = false;
   form: FormGroup;
   passwordSimilar: boolean;

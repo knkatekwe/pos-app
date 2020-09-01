@@ -48,7 +48,8 @@ export class AdjustStockComponent implements OnInit {
 	purchasePrice = new FormControl();
 	qtyF = new FormControl();
 	qtyOHF = new FormControl();
-	itemzLoading = false;
+  itemzLoading = false;
+  saving: boolean;
 
 	// tslint:disable-next-line: max-line-length
 	constructor(
@@ -62,8 +63,8 @@ export class AdjustStockComponent implements OnInit {
 
 	ngOnInit() {
 		this.getPaymentTypeId();
-		this.getItemCode();
-
+    this.getItemCode();
+    this.saving = false;
 		this.itemz = this.itemCode.valueChanges.pipe(
 			debounceTime(400),
 			distinctUntilChanged(),
@@ -190,6 +191,7 @@ export class AdjustStockComponent implements OnInit {
 		});
 	}
 	addAdjustment() {
+    this.saving = true;
 		this.placeAdjustment = new PlaceAdjustment();
 		this.placeAdjustment.itemsDTO = this.searchedItems;
 		this.placeAdjustment.adjustmentDTO = this.adjustment;
@@ -201,13 +203,14 @@ export class AdjustStockComponent implements OnInit {
 					'Stock Removal',
 					'Stock removal has been completed successfully.',
 					'Ok'
-				);
+        );
+        this.saving = true
 				//this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
 				this.route.navigateByUrl('/main/dashboard', { skipLocationChange: true }).then(() => {
 					this.route.navigate([ '/main/inventory/adjust-stock' ]);
 				});
 			} else {
-				//alert('Failed to save the Adjustment');
+				this.saving = false
 				this.confirmationModalService.confirm('Stock Removal', 'Stock removal failed.', 'Ok');
 			}
 		});

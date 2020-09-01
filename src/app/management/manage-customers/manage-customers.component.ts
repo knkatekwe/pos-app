@@ -13,6 +13,7 @@ export class ManagePaymentTypesComponent implements OnInit {
 
   paymentTypes: Array<PaymentType> = [];
   selectedPaymentType: PaymentType = new PaymentType();
+  p: any;
   tempPaymentType: PaymentType = null;
   manuallySelected = false;
   searchText: any;

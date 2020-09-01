@@ -12,7 +12,7 @@
         <div class="card-body login-card-body">
           <p class="login-box-msg">Log-in to start session</p>
 
-          <form [formGroup]="form" (submit)="login(form.value)">
+          <form [formGroup]="form" (submit)="login()">
             <div class="form-group has-feedback">
               <input type="text" class="form-control"
                      placeholder="Username" formControlName="username">

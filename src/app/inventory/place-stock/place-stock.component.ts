@@ -52,7 +52,8 @@ export class PlaceStockComponent implements OnInit {
 	purchasePriceF = new FormControl();
   unitPriceF = new FormControl();
   retailPriceF = new FormControl();
-	itemzLoading = false;
+  itemzLoading = false;
+  saving: boolean;
 
 	// tslint:disable-next-line: max-line-length
 	constructor(
@@ -189,6 +190,7 @@ export class PlaceStockComponent implements OnInit {
 		});
 	}
 	addStock(){
+    this.saving = true
 		this.placeStock = new PlaceStock();
 		this.placeStock.itemsDTO = this.searchedItems;
 		this.placeStock.stockDTO = this.stock;
@@ -197,7 +199,7 @@ export class PlaceStockComponent implements OnInit {
 		this.placeStockService.placeStock(this.placeStock).subscribe((result) => {
 			if (result) {
         this.confirmationModalService.confirm('Stock In-take', 'Stock in-take successfull.', 'Ok')
-				//alert('Stock has been saved successfully');
+				this.saving = true
 				//
 				//this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
 				this.route.navigateByUrl('/main/dashboard', { skipLocationChange: true }).then(() => {
@@ -205,7 +207,7 @@ export class PlaceStockComponent implements OnInit {
 				});
 			} else {
         this.confirmationModalService.confirm('Stock In-take', 'Stock in-take failed!', 'Ok')
-				//alert('Failed to save the Stock');
+				this.saving = false
 			}
 		});
 	}
