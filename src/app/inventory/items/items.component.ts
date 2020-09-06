@@ -16,6 +16,7 @@ export class ItemsComponent implements OnInit {
   selectedItems: Items = new Items;
   tempItems: Items = null;
   manuallySelected = false;
+  isSubmitting: boolean
 
   searchText: any;
   p: any;
@@ -25,6 +26,7 @@ export class ItemsComponent implements OnInit {
   constructor(private itemService: ItemService, private confirmationModalService: ConfirmationModalService) { }
 
   ngOnInit() {
+    this.isSubmitting = false
     this.loadAllItems();
   }
 
@@ -57,16 +59,19 @@ export class ItemsComponent implements OnInit {
   }
 
   saveItems(){
+    this.isSubmitting = true
     this.itemService.saveItems(this.selectedItems).subscribe(
       (result) => {
         if (result) {
-          console.log(this.selectedItems);
+          //console.log(this.selectedItems);
           this.confirmationModalService.confirm('Product', 'Product has been saved successfully.', 'Ok')
+          this.isSubmitting = false
           //alert('Product has been saved successfully');
           this.clear();
           this.loadAllItems();
         } else {
           this.confirmationModalService.confirm('Product', 'Failed to save the product!', 'Ok', 'Cancel')
+          this.isSubmitting = false
           //alert('Failed to save the product');
         }
       }

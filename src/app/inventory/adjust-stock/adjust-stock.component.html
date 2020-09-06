@@ -155,7 +155,7 @@
 
     <div class="card-footer text-muted">
       <hr class="mb-4">
-      <button [disabled]="!selectedItems || selectedItems.length === 0" class="btn btn-success btn-lg btn-block" type="submit">Complete Adjustment Intake</button>
+      <button [disabled]="!selectedItems || selectedItems.length === 0 || isSubmitting" class="btn btn-success btn-lg btn-block" type="submit">Complete Adjustment Intake</button>
     </div>
   </form>
 </div>

@@ -17,6 +17,7 @@ export class ManagePaymentTypesComponent implements OnInit {
   tempPaymentType: PaymentType = null;
   manuallySelected = false;
   searchText: any;
+  isSubmitting: boolean
   // @ViewChild('frmPaymentTypes') frmPaymentTypes: NgForm;
   @ViewChild('frmPaymentTypes', {static: false}) frmPaymentTypes: NgForm;
 
@@ -26,6 +27,7 @@ export class ManagePaymentTypesComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.isSubmitting = false
     this.loadAllPaymentTypes();
   }
 
@@ -73,15 +75,18 @@ export class ManagePaymentTypesComponent implements OnInit {
   }
 
   savePaymentType(){
+    this.isSubmitting = true
     this.paymentTypeService.savePaymentType(this.selectedPaymentType).subscribe(
       (result) => {
         if (result) {
           this.dialog.confirm('Payment Types', 'Payment has been saved successfully.', 'Ok')
+          this.isSubmitting = false
           //alert('Payment Type has been saved successfully');
           this.loadAllPaymentTypes();
           this.clear();
         } else {
           this.dialog.confirm('Payment Types', 'Failed to save payment type!', 'Ok')
+          this.isSubmitting = false
           //alert('Failed to save the Payment Type');
         }
       }

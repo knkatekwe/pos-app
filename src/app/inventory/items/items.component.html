@@ -97,7 +97,7 @@
                   </p>
 
                   <div>
-                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button [disabled]="isSubmitting" type="submit" class="btn btn-primary">Save</button>
                     &nbsp;
                     <button (click)="clear()" type="button" class="btn btn-warning">Clear</button>
                   </div>

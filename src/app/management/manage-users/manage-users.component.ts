@@ -20,6 +20,7 @@ export class ManageUsersComponent implements OnInit {
   manuallySelected = false;
   form: FormGroup;
   passwordSimilar: boolean;
+  isSubmitting: boolean
   //role: any[] = ['user']
   //roles = new FormArray([]);
 
@@ -32,6 +33,7 @@ export class ManageUsersComponent implements OnInit {
               private dialog: ConfirmationModalService) { }
 
   ngOnInit() {
+    this.isSubmitting = false
     this.loadAllUser();
     this.initializeForm()
     this.passwordSimilar = false
@@ -71,37 +73,43 @@ export class ManageUsersComponent implements OnInit {
   // }
 
   saveUser(user){
+    this.isSubmitting = true
     if(this.f.password.value === this.f.password_confirmation.value){
-      console.log(user)
+      //console.log(user)
       if(user.id == null){
         this.userService.register(user).subscribe(
           (result) => {
             if (result) {
-              console.log(this.selectedUser);
+              //console.log(this.selectedUser);
               this.dialog.confirm('System users', 'User saved successfully.', 'Ok')
+              this.isSubmitting = false
               //alert('User has been saved successfully');
               this.clear();
               this.form.reset()
               this.loadAllUser();
             } else {
               this.dialog.confirm('System users', 'Failed to save user.', 'Ok')
+              this.isSubmitting = false
               //alert('Failed to save the User');
             }
           }
         );
       }else{
+        this.isSubmitting = true
         this.userService.update(user.id, user).subscribe(
           (result) => {
             if (result) {
-              console.log(this.selectedUser);
+              //console.log(this.selectedUser);
               //alert('User has been updated successfully');
               this.dialog.confirm('System users', 'User updated successfully.', 'Ok')
+              this.isSubmitting = false
               this.clear()
               this.form.reset()
               this.loadAllUser()
               this.router.navigateByUrl('/login')
             } else {
               this.dialog.confirm('System users', 'User failed to update!', 'Ok')
+              this.isSubmitting = false
               //alert('Failed to updated the user');
             }
           }
@@ -109,6 +117,7 @@ export class ManageUsersComponent implements OnInit {
       }
     }else{
       this.dialog.confirm('System users', 'Passwords should match...', 'Ok')
+      this.isSubmitting = false
       //alert('Passwords should match...!')
     }
 

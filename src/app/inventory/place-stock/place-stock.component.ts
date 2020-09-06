@@ -53,7 +53,7 @@ export class PlaceStockComponent implements OnInit {
   unitPriceF = new FormControl();
   retailPriceF = new FormControl();
   itemzLoading = false;
-  saving: boolean;
+  isSubmiting: boolean;
 
 	// tslint:disable-next-line: max-line-length
 	constructor(
@@ -66,6 +66,7 @@ export class PlaceStockComponent implements OnInit {
 	) {}
 
 	ngOnInit() {
+    this.isSubmiting = false
 		this.getPaymentTypeId();
 		this.getItemCode();
 		this.itemz = this.itemCode.valueChanges.pipe(
@@ -190,7 +191,7 @@ export class PlaceStockComponent implements OnInit {
 		});
 	}
 	addStock(){
-    this.saving = true
+    this.isSubmiting = true
 		this.placeStock = new PlaceStock();
 		this.placeStock.itemsDTO = this.searchedItems;
 		this.placeStock.stockDTO = this.stock;
@@ -199,7 +200,7 @@ export class PlaceStockComponent implements OnInit {
 		this.placeStockService.placeStock(this.placeStock).subscribe((result) => {
 			if (result) {
         this.confirmationModalService.confirm('Stock In-take', 'Stock in-take successfull.', 'Ok')
-				this.saving = true
+				this.isSubmiting = false
 				//
 				//this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
 				this.route.navigateByUrl('/main/dashboard', { skipLocationChange: true }).then(() => {
@@ -207,7 +208,7 @@ export class PlaceStockComponent implements OnInit {
 				});
 			} else {
         this.confirmationModalService.confirm('Stock In-take', 'Stock in-take failed!', 'Ok')
-				this.saving = false
+				this.isSubmiting = false
 			}
 		});
 	}

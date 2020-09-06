@@ -32,9 +32,9 @@ export class PlaceOrderComponent implements OnInit {
 	items: any = [];
 	placeOrder: PlaceOrder;
 	orders: Orders;
-  Total = 0;
+	Total = 0;
 
-  saving: boolean;
+	isSubmitting: boolean;
 
 	itemz: Observable<Items[] | Observable<Items[]>>;
 	itemCode = new FormControl();
@@ -72,8 +72,8 @@ export class PlaceOrderComponent implements OnInit {
 	ngOnInit() {
 		this.getPaymentTypeId();
 		this.getItemCode();
-    this.saleTypeStatus = false;
-    this.saving = false;
+		this.saleTypeStatus = false;
+		this.isSubmitting = false;
 
 		this.itemz = this.itemCode.valueChanges.pipe(
 			debounceTime(400),
@@ -237,7 +237,7 @@ export class PlaceOrderComponent implements OnInit {
 	}
 
 	addOrder() {
-    this.saving = true;
+		this.isSubmitting = true;
 		this.placeOrder = new PlaceOrder();
 		this.placeOrder.itemsDTO = this.searchedItems;
 		this.placeOrder.orderDTO = this.orders;
@@ -250,12 +250,12 @@ export class PlaceOrderComponent implements OnInit {
 				//this.route.navigateByUrl('/', { skipLocationChange: true }).then(() => {
 				// this.route.navigateByUrl('/main/dashboard', { skipLocationChange: true }).then(() => {
 				// 	this.route.navigate([ '/main/place-order/receipt' ]);
-        // });
-        this.saving = true;
-        this.route.navigate([ '/main/place-order/receipt' ]);
+				// });
+				this.isSubmitting = false;
+				this.route.navigate([ '/main/place-order/receipt' ]);
 			} else {
 				this.confirmationModalService.confirm('Sale', 'Sale failed!', 'Ok');
-				this.saving = false;
+				this.isSubmitting = false;
 				// this.frmItems.reset();
 			}
 		});

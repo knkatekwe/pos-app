@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { PlaceOrderServiceService } from '../core/services/place-order-service.service';
 import { ItemService } from '../core/services/item.service';
 import { OrderService } from '../core/services/orders.service';
+import { HttpClient } from '@angular/common/http';
+import { PaymentType } from '../core/models/payment-type';
+import { API_ENDPOINT, ApiService } from '../core/services/api.service';
 
 @Component({
 	selector: 'app-dashboard',
@@ -16,13 +19,18 @@ export class DashboardComponent implements OnInit {
 	totalForEcoCash: number;
   totalForSwipe: number;
   totalForBond: number;
-	totalForRands: number;
+  totalForRands: number;
+  totalForZipitSamrt: number;
+
+  results = [];
 
 	// tslint:disable-next-line: max-line-length
 	constructor(
 		private placeOrderService: PlaceOrderServiceService,
 		private itemService: ItemService,
-		private orderService: OrderService
+    private orderService: OrderService,
+    private http: HttpClient,
+    private apiService: ApiService
 	) {}
 
 	ngOnInit() {
@@ -35,15 +43,11 @@ export class DashboardComponent implements OnInit {
     this.getAllAmountForSwipeTotal();
     this.getAllAmountForRands()
     this.getAllAmountForBondNotes()
-	}
-
-	// getTotalPaymentTypes(): void {
-	//   this.paymentTypeService.getTotalPaymentTypes().subscribe(
-	//     (count) => {
-	//       this.totalPaymentTypes = count;
-	//     }
-	//   );
-	// }
+    this.getAllAmountForZipitSmart()
+    // this.results = this.orderService.getTotalForPaymentTypeToday()
+    // console.log('...data...')
+    // console.log(this.results)
+  }
 
 	getTotalItems(): void {
 		this.itemService.getTotalItems().subscribe((count) => {
@@ -96,6 +100,13 @@ export class DashboardComponent implements OnInit {
   getAllAmountForRands(): void {
 		this.orderService.getTotalAmountForPaymentTypeToday('Rand').subscribe((result) => {
 			this.totalForRands = result;
+			console.log(result);
+		});
+  }
+
+  getAllAmountForZipitSmart(): void {
+		this.orderService.getTotalAmountForPaymentTypeToday('ZIPIT-Smart').subscribe((result) => {
+			this.totalForZipitSamrt = result;
 			console.log(result);
 		});
 	}
