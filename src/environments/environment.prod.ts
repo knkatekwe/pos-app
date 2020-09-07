@@ -1,4 +1,4 @@
 export const environment = {
-  api_url: 'http://localhost:8080/pos-app/api/v1',
+  api_url: 'https://pos-app-back.herokuapp.com/api/v1',
   production: true
 };

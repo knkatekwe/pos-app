@@ -25,7 +25,7 @@
             </div>
             <div class="row">
               <div class="col-4">
-                <button type="submit" [disabled]="form.invalid" class="btn btn-primary btn-block btn-flat">Sign In</button>
+                <button type="submit" [disabled]="form.invalid || isSubmitting" class="btn btn-primary btn-block btn-flat">Sign In</button>
               </div>
             </div>
           </form>

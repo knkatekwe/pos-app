@@ -25,7 +25,8 @@ export class LoginComponent implements OnInit {
 	}
 
 	ngOnInit() {
-		this.failed = false;
+    this.failed = false;
+    this.isSubmitting = false
 		this.form = this.formBuilder.group({
 			username: [ '', Validators.required ],
 			password: [ '', Validators.required ]
@@ -46,14 +47,14 @@ export class LoginComponent implements OnInit {
 	}
 
 	login() {
-		//this.isSubmitting = true;
+		this.isSubmitting = true;
 		//this.errors = {errors: {}};
-
 		const credentials = this.form.value;
 		//console.log(credentials);
 		this.userService.login(credentials).subscribe(
 			(data) => {
 				//console.log('login successful!');
+				this.isSubmitting = false;
 				this.router.navigateByUrl('/main/dashboard');
 			},
 			(err) => {
