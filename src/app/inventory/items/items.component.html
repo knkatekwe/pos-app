@@ -128,7 +128,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let item of items | filter:searchText | paginate: { itemsPerPage: 6, currentPage: p }"
+            <tr *ngFor="let item of items | filter:searchText | paginate: { itemsPerPage: 9, currentPage: p }"
               (click)="selectItems(item)" [class.selected]="item==selectedItems">
               <td>{{item.code}}</td>
               <td>{{item.discription}}</td>

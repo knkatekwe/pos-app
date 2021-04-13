@@ -45,7 +45,6 @@
               "node_modules/datatables.net-buttons/js/buttons.html5.js",
               "node_modules/datatables.net-buttons/js/buttons.print.js",
               "node_modules/datatables.net-select/js/dataTables.select.js"
-
             ]
           },
           "configurations": {
