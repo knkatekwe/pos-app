@@ -60,7 +60,7 @@
     <tbody>
       <tr *ngFor="let order of orders | filter:searchText | paginate: { itemsPerPage: 6, currentPage: p }">
         <td>{{order.user.username}}</td>
-        <td>{{order.date | date: 'fullDate'}}</td>
+        <td>{{order.date | date: 'medium'}}</td>
         <td>{{order.paymentType.typeName}}</td>
         <td>{{order.saleType}}</td>
         <td>{{order.totalPrice | currency: 'USD'}}</td>

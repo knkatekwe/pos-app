@@ -39,8 +39,7 @@
 
       <div class="offset-md-0 col-md-2">
         <label for="sale">Select Sale...</label>
-        <select [disabled]="true" [formControl]="saleType" class="custom-select d-block w-100"
-          id="sale" required>
+        <select [disabled]="true" [formControl]="saleType" class="custom-select d-block w-100" id="sale" required>
           <option [value]="sale.name" *ngFor="let sale of saleTypes">{{sale.name}}</option>
         </select>
       </div>
@@ -50,7 +49,7 @@
     </div>
 
     <div class="row">
-<!-- <pre>{{model.code}}</pre> -->
+      <!-- <pre>{{model.code}}</pre> -->
     </div>
 
     <form #frmItem="ngForm">
@@ -59,12 +58,10 @@
 
         <div class="col-md-2 mb-3">
           <label for="code">Product Code:</label>
-          <input id="code" type="text" name="code"
-                 #code [formControl]="codeF" class="form-control"
-                 (change)="searchItems($event)" [(ngModel)]="model.code"
-                 [ngbTypeahead]="search"
-                 [resultFormatter]="resultFormatBandListValue" [inputFormatter]="inputFormatBandListValue"
-                 #instance="ngbTypeahead" [inputFormatter]="formatter" autofocus />
+          <input id="code" type="text" name="code" #code [formControl]="codeF" class="form-control"
+            (change)="searchItems($event)" [(ngModel)]="model.code" [ngbTypeahead]="search"
+            [resultFormatter]="resultFormatBandListValue" [inputFormatter]="inputFormatBandListValue"
+            #instance="ngbTypeahead" [inputFormatter]="formatter" autofocus />
         </div>
 
         <!-- <div class="col-md-4 mb-3">
@@ -92,9 +89,9 @@
         </div>
 
         <div class="col-md-2 mb-3">
-            <label for="qty">Qty</label>
-            <input #qty type="number" [formControl]="qtyF" class="form-control" id="qty" placeholder="" min="1"
-              name="qty" required>
+          <label for="qty">Qty</label>
+          <input #qty type="number" [formControl]="qtyF" class="form-control" id="qty" placeholder="" min="1" name="qty"
+            required>
         </div>
 
         <div class="card-body button">
@@ -121,10 +118,10 @@
           <tr *ngFor="let SelectItem of selectedItems; let i = index">
             <td>{{SelectItem.item.code}}</td>
             <td>{{SelectItem.item.discription}}</td>
-            <td>{{SelectItem.item.unicPrice  | currency: 'USD'}}</td>
-            <td>{{SelectItem.item.retailPrice  | currency: 'USD'}}</td>
+            <td>{{SelectItem.item.unicPrice | currency: 'USD'}}</td>
+            <td>{{SelectItem.item.retailPrice | currency: 'USD'}}</td>
             <td>{{SelectItem.quantity}}</td>
-            <td>{{SelectItem.quantity * SelectItem.unitprice  | currency: 'USD'}}</td>
+            <td>{{SelectItem.quantity * SelectItem.unitprice | currency: 'USD'}}</td>
             <td>
               <button (click)="removeItem(i, (SelectItem.quantity * SelectItem.unitprice))"
                 class="btn btn-sm btn-outline-danger">Remove</button>
@@ -135,20 +132,31 @@
     </div>
 
     <div class="row">
-      <div class="col-md-3 offset-md-3"></div>
-      <div class="col-md-3 offset-md-3">
-        <label for="total">
-          <h3>Total</h3>
-        </label>
-        <input type="text" class="form-control" id="total" placeholder="" name="total"
-          value="{{FullTotal | currency: 'USD'}}" disabled required>
+      <div class="col-md-3">
+        <label for="tenderedAmount">Amount Tendered</label>
+        <input type="number" [formControl]="tenderedAmount" class="form-control"
+          id="tenderedAmount" placeholder="" min="0" (change)="onTenderChange($event)" required>
+        <!-- <button >Calculate</button> -->
+      </div>
+      <div class="offset-md-3">
+
+        <div class="">
+          <h4 class="font-weight-bold mr-4">Total : {{fullTotal | currency: 'USD'}}</h4>
+          <h4 [hidden]="tenderedAmount.value <= 0" class="font-weight-bold">Change : {{tenderedAmount.value - fullTotal | currency: 'USD'}}</h4>
+        </div>
+
+        <!-- <input type="text" class="form-control" id="total" placeholder="" name="total"
+          value="{{fullTotal | currency: 'USD'}}" disabled required> -->
       </div>
     </div>
 
     <div class="card-footer text-muted">
       <hr class="mb-4">
-      <button [disabled]="!selectedItems || selectedItems.length === 0 || isSubmitting" class="btn btn-success btn-lg btn-block"
-        type="submit"> Complete Sale</button>
+      <button [disabled]="!selectedItems || selectedItems.length === 0 || isSubmitting"
+        class="btn btn-success btn-lg btn-block" type="submit"> Complete Sale</button>
     </div>
   </form>
 </div>
+
+<!-- <pre>{{tenderedAmount.value | json}}</pre> -->
+<!-- <pre>{{tendered}}</pre> -->

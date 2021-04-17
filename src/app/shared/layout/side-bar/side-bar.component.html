@@ -51,6 +51,15 @@
         </li>
 
         <li class="nav-item" *appUserRole="[ Role.Admin ]">
+          <a [routerLink]="['/main/inventory/barcodes']" routerLinkActive="active" class="nav-link">
+            <i class="nav-icon fa fa-barcode"></i>
+            <p>
+              Manage Barcodes
+            </p>
+          </a>
+        </li>
+
+        <li class="nav-item" *appUserRole="[ Role.Admin ]">
           <a [routerLink]="['/main/inventory/place-stock']" routerLinkActive="active" class="nav-link">
             <i class="nav-icon fa fa-laptop"></i>
             <p>

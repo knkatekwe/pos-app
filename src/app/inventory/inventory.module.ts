@@ -6,13 +6,15 @@ import { ItemsComponent } from './items/items.component';
 import { AdjustStockComponent } from './adjust-stock/adjust-stock.component';
 import { PlaceStockComponent } from './place-stock/place-stock.component';
 import { InventoryComponent } from './inventory.component';
+import { BarcodesComponent } from './barcodes/barcodes.component';
 
 @NgModule({
   declarations: [
     ItemsComponent,
     AdjustStockComponent,
     PlaceStockComponent,
-    InventoryComponent
+    InventoryComponent,
+    BarcodesComponent
   ],
   imports: [
     SharedModule,

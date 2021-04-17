@@ -1,0 +1,128 @@
+<!-- Content Header (Page header) -->
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1 class="m-0 text-dark">Manage Barcodes</h1>
+            </div><!-- /.col -->
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a [routerLink]="['/main/dashboard']">Home</a></li>
+                    <li class="breadcrumb-item active">Manage Barcodes</li>
+                </ol>
+            </div><!-- /.col -->
+        </div><!-- /.row -->
+    </div><!-- /.container-fluid -->
+</div>
+<!-- /.content-header -->
+
+<!-- Main content -->
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 col-12">
+
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Custom Barcodes</h3>
+
+                    </div>
+                    <!-- /.card-header -->
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col col-12">
+                                <form #frmBarcodes="ngForm" (ngSubmit)="frmBarcodes.form.valid && saveBarcodes()">
+
+                                    <input type="hidden" name="id" #id="ngModel" [(ngModel)]="selectedBarcodes.id">
+
+                                    <p class="form-group">
+                                        <label for="code">Barcode</label>
+                                        <input name="code" #code="ngModel" [(ngModel)]="selectedBarcodes.code" id="code"
+                                            [ngClass]="{ 'is-invalid': frmBarcodes.submitted && code.invalid }" required
+                                            class="form-control">
+                                    </p>
+                                    <div *ngIf="frmBarcodes.submitted && code.invalid" class="invalid-feedback">
+                                        <div *ngIf="code.errors.required">Code is required!</div>
+                                    </div>
+
+                                    <p class="form-group">
+                                        <label for="txtDiscription">Description</label>
+                                        <input name="txtDiscription" [(ngModel)]="selectedBarcodes.description"
+                                            id="txtDiscription" class="form-control">
+                                    </p>
+
+                                    <div>
+                                        <button [disabled]="isSubmitting" type="submit"
+                                            class="btn btn-primary">Save</button>
+                                        &nbsp;
+                                        <button (click)="clear()" type="button" class="btn btn-warning">Clear</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /.card-body -->
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <div class="col-md-8 col-12">
+                <div class="form-group has-search">
+                    <span class="fa fa-search form-control-feedback"></span><input class="form-control" type="text"
+                        name="search" [(ngModel)]="searchText" autocomplete="off" placeholder="  Search here...">
+                </div>
+                <table id="tblBarcodes" class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Code</th>
+                            <th>Description</th>
+                            <th>Created</th>
+                            <!-- <th>Updated</th> -->
+                            <!-- <th></th> -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of barcodes | filter:searchText | paginate: { itemsPerPage: 5, currentPage: p }"
+                            (click)="selectBarcodes(item)" [class.selected]="item==selectedBarcodes">
+                            <td>{{item.code}}</td>
+                            <td>{{item.description}}</td>
+                            <td>{{item.createdAt | date: 'medium'}}</td>
+                            <!-- <td>{{item.updatedAt | date}}</td> -->
+
+
+                            <!-- <td>
+                <i (click)="deletBarcodes(item)" class="fa fa-trash fa-2x"></i>
+              </td> -->
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </div>
+    </div><!-- /.container-fluid -->
+</section>
+
+<div class="row">
+
+    <div class="">
+        <div id="print-section">
+            <div class="row">
+                <div class="col" *ngFor="let barcode of barcodes">
+                    <ngx-barcode [bc-value]="barcode?.code" [bc-display-value]="true" [bc-format]="format">
+                    </ngx-barcode>
+                </div>
+            </div>
+        </div>
+        <button class="btn btn-info btn-block mt-2" [useExistingCss]="true" printSectionId="print-section"
+            ngxPrint>Print Barcodes</button>
+    </div>
+
+</div>
+
+<!-- <pre>{{frmBarcodes.value| json}}</pre> -->

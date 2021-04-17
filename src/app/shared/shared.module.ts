@@ -7,6 +7,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { DataTablesModule } from 'angular-datatables';
+// Import ngx-barcode module
+import { NgxBarcodeModule } from 'ngx-barcode';
 import { SideBarComponent } from './layout/side-bar/side-bar.component';
 import { NavBarComponent } from './layout/nav-bar/nav-bar.component';
 import { FooterComponent } from './layout/footer/footer.component';
@@ -18,6 +20,7 @@ import { ReceiptPrintComponent } from './receipts/receipt-print/receipt-print.co
 import { RemovalReceiptComponent } from './receipts/removal-receipt/removal-receipt.component';
 import { ConfirmationModalComponent } from './confirmation-modal/confirmation-modal.component';
 import { ConfirmationModalService } from './confirmation-modal/confirmation-modal.service';
+import { NgxPrintModule } from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -44,6 +47,8 @@ import { ConfirmationModalService } from './confirmation-modal/confirmation-moda
     Ng2SearchPipeModule,
     NgbModule,
     DataTablesModule,
+    NgxBarcodeModule,//barcode module
+    NgxPrintModule
   ],
   exports:[
     CommonModule,
@@ -57,6 +62,9 @@ import { ConfirmationModalService } from './confirmation-modal/confirmation-moda
     Ng2SearchPipeModule,
     NgbModule,
     DataTablesModule,
+    NgxBarcodeModule,//barcode module
+    NgxPrintModule,
+    //
     SideBarComponent,
     NavBarComponent,
     FooterComponent,

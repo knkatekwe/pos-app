@@ -7,6 +7,7 @@ import { ManageItemComponentCandeactivateGuardGuard } from '../core/guards/manag
 import { AdjustStockComponentCandeactivateGuard } from '../core/guards/adjust-stock-component.guard';
 import { PlaceStockComponentCandeactivateGuard } from '../core/guards/place-stock-component.guard';
 import { InventoryComponent } from './inventory.component';
+import { BarcodesComponent } from './barcodes/barcodes.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,11 @@ const routes: Routes = [
         path: 'adjust-stock',
         component: AdjustStockComponent,
         //canDeactivate: [AdjustStockComponentCandeactivateGuard]
+      },
+      {
+        path: 'barcodes',
+        component: BarcodesComponent,
+        // canDeactivate: [ManageItemComponentCandeactivateGuardGuard]
       },
       {
         path: 'products',
