@@ -19,7 +19,7 @@ export class ManagePaymentTypesComponent implements OnInit {
   searchText: any;
   isSubmitting: boolean
   // @ViewChild('frmPaymentTypes') frmPaymentTypes: NgForm;
-  @ViewChild('frmPaymentTypes', {static: false}) frmPaymentTypes: NgForm;
+  @ViewChild('frmPaymentTypes') frmPaymentTypes: NgForm;
 
 
   constructor(private paymentTypeService: PaymentTypeService,

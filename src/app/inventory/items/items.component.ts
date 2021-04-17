@@ -20,7 +20,7 @@ export class ItemsComponent implements OnInit {
 	searchText: any;
 	p: any;
 	// @ViewChild('frmItems') frmItems: NgForm;
-	@ViewChild('frmItems', { static: false })
+	@ViewChild('frmItems')
 	frmItems: NgForm;
 
 	constructor(private itemService: ItemService, private confirmationModalService: ConfirmationModalService) {}

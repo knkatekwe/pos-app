@@ -16,14 +16,14 @@
   },
   "private": true,
   "dependencies": {
-    "@angular/animations": "~8.2.14",
-    "@angular/common": "~8.2.14",
-    "@angular/compiler": "~8.2.14",
-    "@angular/core": "~8.2.14",
-    "@angular/forms": "~8.2.14",
-    "@angular/platform-browser": "~8.2.14",
-    "@angular/platform-browser-dynamic": "~8.2.14",
-    "@angular/router": "~8.2.14",
+    "@angular/animations": "~11.2.10",
+    "@angular/common": "~11.2.10",
+    "@angular/compiler": "~11.2.10",
+    "@angular/core": "~11.2.10",
+    "@angular/forms": "~11.2.10",
+    "@angular/platform-browser": "~11.2.10",
+    "@angular/platform-browser-dynamic": "~11.2.10",
+    "@angular/router": "~11.2.10",
     "@babel/compat-data": "7.8.0",
     "@ng-bootstrap/ng-bootstrap": "^5.2.1",
     "@types/vex-js": "^2.3.29",
@@ -46,17 +46,17 @@
     "ngx-cookie-service": "^10.0.1",
     "ngx-pagination": "^5.0.0",
     "ngx-print": "^1.2.0-beta.5",
-    "rxjs": "~6.4.0",
+    "rxjs": "~6.6.7",
     "tslib": "^1.10.0",
-    "typescript": "^3.5.3",
+    "typescript": "^4.1.5",
     "vex-js": "^4.1.0",
-    "zone.js": "~0.9.1"
+    "zone.js": "~0.11.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.803.24",
     "@angular/cli": "^11.2.9",
     "@angular/compiler-cli": "^11.2.10",
-    "@angular/language-service": "~8.2.14",
+    "@angular/language-service": "~11.2.10",
     "@babel/cli": "^7.10.5",
     "@babel/core": "^7.11.1",
     "@babel/plugin-proposal-class-properties": "^7.10.4",
@@ -79,7 +79,6 @@
     "karma-jasmine-html-reporter": "^1.4.0",
     "protractor": "^7.0.0",
     "ts-node": "~7.0.0",
-    "tslint": "~5.15.0",
-    "typescript": "^3.9.9"
+    "tslint": "~5.15.0"
   }
 }

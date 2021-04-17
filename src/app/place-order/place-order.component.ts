@@ -51,13 +51,13 @@ export class PlaceOrderComponent implements OnInit {
 	paymentStatus = false;
 	saleTypeStatus: boolean;
 	// @ViewChild('frmItems') frmItems: NgForm;
-	@ViewChild('frmItems', { static: false })
+	@ViewChild('frmItems')
 	frmItems: NgForm;
-	@ViewChild('frmItem', { static: false })
+	@ViewChild('frmItem')
 	frmItem: NgForm;
-	@ViewChild('code', { static: false })
+	@ViewChild('code')
 	nameField: ElementRef;
-	@ViewChild('qty', { static: false })
+	@ViewChild('qty')
 	qtyField: ElementRef;
 
 	constructor(

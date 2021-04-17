@@ -32,11 +32,11 @@ export class PlaceStockComponent implements OnInit {
 	stock: Stock;
 	Total = 0;
 	// @ViewChild('frmItems') frmItems: NgForm;
-	@ViewChild('frmItems', { static: false })
+	@ViewChild('frmItems')
 	frmItems: NgForm;
-	@ViewChild('code', { static: false })
+	@ViewChild('code')
 	nameField: ElementRef;
-	@ViewChild('qty', { static: false })
+	@ViewChild('qty')
   qtyField: ElementRef;
 
   form: FormGroup;

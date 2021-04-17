@@ -15,7 +15,7 @@ export class ProductsComponent implements OnInit {
   // Must be declared as "any", not as "DataTables.Settings"
   dtOptions: any = {};
 
-  @ViewChild('tblItems', {static: false}) table: any;
+  @ViewChild('tblItems') table: any;
   dataTable: any;
 
   constructor(private itemService: ItemService) { }

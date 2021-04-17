@@ -25,7 +25,7 @@ export class ManageUsersComponent implements OnInit {
   //roles = new FormArray([]);
 
   searchText: any;
-  @ViewChild('frmUser', {static: false}) frmUser: NgForm;
+  @ViewChild('frmUser') frmUser: NgForm;
 
   constructor(private userService: UserService,
               private fb: FormBuilder,
