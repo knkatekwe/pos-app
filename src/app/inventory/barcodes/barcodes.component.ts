@@ -26,6 +26,7 @@ export class BarcodesComponent implements OnInit {
   //
   elementType = "svg";
   format = "CODE128";
+  // format = "EAN13";
 
   constructor(
     private barcodeService: BarcodeService,

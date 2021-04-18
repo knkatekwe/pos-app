@@ -48,7 +48,9 @@
                                     <p class="form-group">
                                         <label for="txtDiscription">Description</label>
                                         <input name="txtDiscription" [(ngModel)]="selectedBarcodes.description"
-                                            id="txtDiscription" class="form-control">
+                                            id="txtDiscription" class="form-control"
+                                            [ngClass]="{ 'is-invalid': frmBarcodes.submitted && code.invalid }"
+                                            required>
                                     </p>
 
                                     <div>
