@@ -118,7 +118,7 @@
                 <div class="col" *ngFor="let barcode of barcodes">
                     <ngx-barcode [bc-value]="barcode?.code" [bc-display-value]="true" [bc-format]="format">
                     </ngx-barcode>
-                    <h5 class="text-center">{{ barcode?.description }}</h5>
+                    <h5>{{ barcode?.description }}</h5>
                 </div>
             </div>
         </div>
