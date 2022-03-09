@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
     this.failed = false;
     this.isSubmitting = false
 		this.form = this.formBuilder.group({
-			username: [ '', Validators.required ],
-			password: [ '', Validators.required ]
+			username: [ 'admin', Validators.required ],
+			password: [ 'password', Validators.required ]
 		});
 
 		// this.router.navigateByUrl('pos', { skipLocationChange: true }).then(() => {
